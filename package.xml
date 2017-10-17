@@ -46,7 +46,7 @@
    <dir name="doc">
     <dir name="Horde">
      <dir name="Compress">
-      <file name="UPGRADING" role="doc" />
+      <file name="UPGRADING.rst" role="doc" />
      </dir> <!-- /doc/Horde/Compress -->
     </dir> <!-- /doc/Horde -->
    </dir> <!-- /doc -->
@@ -448,7 +448,7 @@
  </dependencies>
  <phprelease>
   <filelist>
-   <install as="UPGRADING" name="doc/Horde/Compress/UPGRADING" />
+   <install as="UPGRADING.rst" name="doc/Horde/Compress/UPGRADING.rst" />
    <install as="Horde/Compress.php" name="lib/Horde/Compress.php" />
    <install as="Horde/Compress/Base.php" name="lib/Horde/Compress/Base.php" />
    <install as="Horde/Compress/Dbx.php" name="lib/Horde/Compress/Dbx.php" />
