@@ -28,7 +28,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </lead>
- <date>2017-10-17</date>
+ <date>2017-10-20</date>
  <version>
   <release>2.2.2</release>
   <api>2.2.0</api>
@@ -355,7 +355,6 @@
       <file name="AllTests.php" role="test" />
       <file name="Autoload.php" role="test" />
       <file name="bootstrap.php" role="test" />
-      <file name="phpunit.xml" role="test" />
       <file name="RarTest.php" role="test" />
       <file name="TarTest.php" role="test" />
       <file name="TnefTest.php" role="test" />
@@ -566,7 +565,6 @@
    <install as="Horde/Compress/fixtures/tnef_vnote" name="test/Horde/Compress/fixtures/tnef_vnote" />
    <install as="Horde/Compress/fixtures/tnef_vtodo_fixture.txt" name="test/Horde/Compress/fixtures/tnef_vtodo_fixture.txt" />
    <install as="Horde/Compress/fixtures/winmail2.dat" name="test/Horde/Compress/fixtures/winmail2.dat" />
-   <install as="Horde/Compress/phpunit.xml" name="test/Horde/Compress/phpunit.xml" />
    <install as="Horde/Compress/RarTest.php" name="test/Horde/Compress/RarTest.php" />
    <install as="Horde/Compress/TarTest.php" name="test/Horde/Compress/TarTest.php" />
    <install as="Horde/Compress/TnefTest.php" name="test/Horde/Compress/TnefTest.php" />
@@ -1082,7 +1080,7 @@ Initial release as a PEAR package
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-17</date>
+   <date>2017-10-20</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 
