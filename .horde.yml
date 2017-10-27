@@ -5,3 +5,49 @@ full: Compression library
 description: An API for various compression techniques.
 list: dev
 type: library
+homepage: https://www.horde.org/libraries/Horde_Compress
+authors:
+  -
+    name: Jan Schneider
+    user: jan
+    email: jan@horde.org
+    active: true
+    role: lead
+  -
+    name: Chuck Hagenbuch
+    user: chuck
+    email: chuck@horde.org
+    active: false
+    role: lead
+  -
+    name: Michael Slusarz
+    user: slusarz
+    email: slusarz@horde.org
+    active: false
+    role: lead
+version:
+  release: 2.2.2
+  api: 2.2.0
+state:
+  release: stable
+  api: stable
+license:
+  identifier: LGPL-2.1
+  uri: http://www.horde.org/licenses/lgpl21
+dependencies:
+  required:
+    php: ^5.3 || ^7
+    pear:
+      pear.horde.org/Horde_Exception: ^2
+      pear.horde.org/Horde_Mime: ^2.5
+      pear.horde.org/Horde_Translation: ^2.2
+      pear.horde.org/Horde_Util: ^2
+  optional:
+    pear:
+      pear.horde.org/Horde_Icalendar: ^2
+      pear.horde.org/Horde_Mail: ^2.5
+      pear.horde.org/Horde_Mapi: ^1
+      pear.horde.org/Horde_Stream_Filter: ^2
+      pear.horde.org/Horde_Test: ^2.1
+    ext:
+      zlib: '*'
