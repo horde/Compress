@@ -39,7 +39,6 @@
  </stability>
  <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
  <notes>
-* 
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -584,7 +583,7 @@
    <date>2003-07-03</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-Initial release as a PEAR package
+* Initial release as a PEAR package
    </notes>
   </release>
   <release>
@@ -601,7 +600,7 @@ Initial release as a PEAR package
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * Added rar driver.
-  * Converted to package.xml 2.0 for pear.horde.org
+* Converted to package.xml 2.0 for pear.horde.org
    </notes>
   </release>
   <release>
@@ -1083,7 +1082,6 @@ Initial release as a PEAR package
    <date>2017-10-20</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-* 
    </notes>
   </release>
  </changelog>
