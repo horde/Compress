@@ -28,7 +28,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </lead>
- <date>2017-10-20</date>
+ <date>2017-10-27</date>
  <version>
   <release>2.2.2</release>
   <api>2.2.0</api>
@@ -45,6 +45,7 @@
    <dir name="doc">
     <dir name="Horde">
      <dir name="Compress">
+      <file name="CHANGES" role="doc" />
       <file name="UPGRADING.rst" role="doc" />
      </dir> <!-- /doc/Horde/Compress -->
     </dir> <!-- /doc/Horde -->
@@ -446,6 +447,7 @@
  </dependencies>
  <phprelease>
   <filelist>
+   <install as="CHANGES" name="doc/Horde/Compress/CHANGES" />
    <install as="UPGRADING.rst" name="doc/Horde/Compress/UPGRADING.rst" />
    <install as="Horde/Compress.php" name="lib/Horde/Compress.php" />
    <install as="Horde/Compress/Base.php" name="lib/Horde/Compress/Base.php" />
@@ -1079,7 +1081,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-20</date>
+   <date>2017-10-27</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
    </notes>
