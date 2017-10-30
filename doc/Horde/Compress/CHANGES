@@ -1,0 +1,278 @@
+----------
+v2.2.2-git
+----------
+
+
+------
+v2.2.1
+------
+
+[jan] Fix RAR compressed file names with unicode characters.
+
+
+------
+v2.2.0
+------
+
+[jan] Add support for compressing TAR archives.
+[jan] Add compressDirectory().
+[jan] Fix notice when adding files older than 1988 to a ZIP archive.
+[jan] Fix reading file dates after August from ZIP files.
+
+
+------
+v2.1.6
+------
+
+[jan] Update German translation.
+
+
+------
+v2.1.5
+------
+
+[mjr] Handle overflowed timestamps on 32bit systems more gracefully.
+[jan] Update Greek translation (Limperis Antonis <limperis@cti.gr>).
+
+
+------
+v2.1.4
+------
+
+[jan] Mark PHP 7 as supported.
+
+
+------
+v2.1.3
+------
+
+[jan] Updated UK translation.
+[jan] Fix Composer file.
+
+
+------
+v2.1.2
+------
+
+[jan] Fix issues with certain locales like Turkish.
+
+
+------
+v2.1.1
+------
+
+[jan] Fix fatal error due to incorrect class name case (Ralph Becker
+      <rb@stylite.de>)
+[mms] Fix leaking Horde_Date exceptions.
+[mjr] Improve detection of ORGANIZER when decoding MAPI encoded vTODOs.
+
+
+------
+v2.1.0
+------
+
+[mms] Fix decoding of Unicode Strings in TNEF MAPI attributes.
+[mjr] Fix possible fatal error when parsing certain types of Vtodo files.
+[mjr] Add support for generating vTodo from TNEF embedded MAPI TASK objects.
+[mjr] Add option to inject a logger object.
+[mjr] Improve support for decompressing TNEF data.
+
+
+------
+v2.0.8
+------
+
+[jan] Update Hungarian translation (Andras Galos <galosa@netinform.hu>).
+[jan] Update Danish translation (Erling Preben Hansen <erling@eph.dk>).
+
+
+------
+v2.0.7
+------
+
+[mjr] Fix parsing TNEF data that does not contain a meeting request (Bug
+      #12931).
+
+
+------
+v2.0.6
+------
+
+[mjr] Fix tests when Horde_Mapi is not available.
+
+
+------
+v2.0.5
+------
+
+[mjr] Add initial support for decoding TNEF meeting requests.
+
+
+------
+v2.0.4
+------
+
+[jan] Fix Dbx and Tar unpacking on PHP 5.5+.
+
+
+------
+v2.0.3
+------
+
+[jan] Update French translation (Paul De Vlieger
+      <paul.de_vlieger@moniut.univ-bpclermont.fr>).
+
+
+------
+v2.0.2
+------
+
+[jan] Update Basque translation (Ibon Igartua <ibon.igartua@ehu.es>).
+
+
+------
+v2.0.1
+------
+
+[jan] Update Dutch translation (Arjen de Korte <build+horde@de-korte.org>).
+
+
+------
+v2.0.0
+------
+
+First stable release for Horde 5.
+
+
+-----------
+v2.0.0beta2
+-----------
+
+[mms] Fix parsing UTF-16 data in TNEF driver (Bug #11390)
+      (andrey012@gmail.com).
+
+
+-----------
+v2.0.0beta1
+-----------
+
+First beta release for Horde 5.
+
+
+------------
+v2.0.0alpha1
+------------
+
+First alpha release for Horde 5.
+
+
+------
+v1.0.8
+------
+
+[mms] Fix parsing DBX data.
+
+
+------
+v1.0.7
+------
+
+[mms] Check for damaged ZIP data.
+
+
+------
+v1.0.6
+------
+
+[jan] Update Croatian translation (Valentin Vidic <Valentin.Vidic@CARNet.hr>).
+[jan] Update Estonian translation (Alar Sing <alar.sing@err.ee>).
+
+
+------
+v1.0.5
+------
+
+[mms] Detect broken RAR data so it does not cause an infinite loop.
+
+
+------
+v1.0.4
+------
+
+[jan] Update Latvian translation.
+
+
+------
+v1.0.3
+------
+
+[jan] Update Lithuanian translation.
+[jan] Update Brazilian Portuguese translation.
+
+
+------
+v1.0.2
+------
+
+[jan] Updated Slovak translation.
+
+
+------
+v1.0.1
+------
+
+[jan] Updated Spanish translation.
+
+
+------
+v1.0.0
+------
+
+First stable release for Horde 4.
+[mms] Add $canCompress and $canDecompress properties to Horde_Compress_Base.
+[mms] Drivers now extend Horde_Compress_Base.
+[mms] Add Horde_Compress_Exception.
+[mms] Do all zip compression on stream data in streams.
+
+
+---------
+v1.0.0RC2
+---------
+
+Second release candidate for Horde 4.
+
+
+---------
+v1.0.0RC1
+---------
+
+First release candidate for Horde 4.
+
+
+-----------
+v1.0.0beta1
+-----------
+
+First beta release for Horde 4.
+
+
+------------
+v1.0.0alpha1
+------------
+
+First alpha release for Horde 4.
+
+
+------
+v0.0.2
+------
+
+Added rar driver.
+Converted to package.xml 2.0 for pear.horde.org
+
+
+------
+v0.0.1
+------
+
+Initial release as a PEAR package
