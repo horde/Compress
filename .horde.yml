@@ -14,6 +14,12 @@ authors:
     active: true
     role: lead
   -
+    name: Michael J Rubinsky
+    user: mrubinsk
+    email: mrubinsk@horde.org
+    active: true
+    role: developer
+  -
     name: Chuck Hagenbuch
     user: chuck
     email: chuck@horde.org
