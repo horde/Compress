@@ -1,14 +1,19 @@
 {
     "name": "horde/compress",
-    "description": "Horde Compression API",
+    "description": "Compression library",
     "type": "library",
-    "homepage": "https://pear.horde.org",
+    "homepage": "https://www.horde.org/libraries/Horde_Compress",
     "license": "LGPL-2.1",
     "authors": [
         {
             "name": "Jan Schneider",
             "email": "jan@horde.org",
             "role": "lead"
+        },
+        {
+            "name": "Michael J Rubinsky",
+            "email": "mrubinsk@horde.org",
+            "role": "developer"
         },
         {
             "name": "Chuck Hagenbuch",
@@ -19,15 +24,10 @@
             "name": "Michael Slusarz",
             "email": "slusarz@horde.org",
             "role": "lead"
-        },
-        {
-            "name": "Michael J Rubinsky",
-            "email": "mrubinsk@horde.org",
-            "role": "developer"
         }
     ],
     "version": "2.2.2",
-    "time": "2017-10-20",
+    "time": "2017-11-11",
     "repositories": [
         {
             "type": "pear",
