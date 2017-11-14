@@ -357,7 +357,6 @@
       <file name="AllTests.php" role="test" />
       <file name="Autoload.php" role="test" />
       <file name="bootstrap.php" role="test" />
-      <file name="phpunit.xml" role="test" />
       <file name="RarTest.php" role="test" />
       <file name="TarTest.php" role="test" />
       <file name="TnefTest.php" role="test" />
@@ -557,7 +556,6 @@
    <install as="Horde/Compress/AllTests.php" name="test/Horde/Compress/AllTests.php" />
    <install as="Horde/Compress/Autoload.php" name="test/Horde/Compress/Autoload.php" />
    <install as="Horde/Compress/bootstrap.php" name="test/Horde/Compress/bootstrap.php" />
-   <install as="Horde/Compress/phpunit.xml" name="test/Horde/Compress/phpunit.xml" />
    <install as="Horde/Compress/RarTest.php" name="test/Horde/Compress/RarTest.php" />
    <install as="Horde/Compress/TarTest.php" name="test/Horde/Compress/TarTest.php" />
    <install as="Horde/Compress/TnefTest.php" name="test/Horde/Compress/TnefTest.php" />
