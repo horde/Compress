@@ -142,6 +142,9 @@ class Horde_Compress_ZipTest extends Horde_Test_Case
         $list = $compress->decompress(
             $zip_data, array('action' => Horde_Compress_Zip::ZIP_LIST)
         );
+        usort($list, function ($a, $b) {
+           return strcmp($a['name'], $b['name']);
+        });
         $this->assertCount(3, $list);
         $this->assertEquals('one.txt', $list[0]['name']);
         $this->assertEquals(4, $list[0]['size']);

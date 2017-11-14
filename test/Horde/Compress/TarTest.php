@@ -111,6 +111,9 @@ class Horde_Compress_TarTest extends Horde_Test_Case
         $this->assertNotEmpty($tar_data);
 
         $list = $compress->decompress($tar_data);
+        usort($list, function ($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
         $this->assertCount(3, $list);
         $this->assertEquals('one.txt', $list[0]['name']);
         $this->assertEquals(4, $list[0]['size']);
