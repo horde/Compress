@@ -108,12 +108,13 @@ class Horde_Compress_Tar extends Horde_Compress_Base
                 $link = $isLink ? $this->_getLink($file['spl']) : '';
                 if (function_exists('posix_getpwuid')) {
                     $posix = posix_getpwuid($file['spl']->getOwner());
-                    $owner = $posix['name'];
                 }
+                $owner = !empty($posix['name']) ? $posix['name'] : '';
+
                 if (function_exists('posix_getgrgid')) {
                     $posix = posix_getgrgid($file['spl']->getGroup());
-                    $group = $posix['name'];
                 }
+                $group = !empty($posix['name']) ? $posix['name'] : '';
             } else {
                 $isLink = false;
                 $link = $owner = $group = '';
