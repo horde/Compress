@@ -143,41 +143,33 @@ class Horde_Compress_ZipTest extends Horde_Test_Case
             $zip_data, array('action' => Horde_Compress_Zip::ZIP_LIST)
         );
         $this->assertCount(3, $list);
-        $this->assertEquals('one.txt', $list[0]['name']);
-        $this->assertEquals(4, $list[0]['size']);
-        $this->assertEquals('sub/three.txt', $list[1]['name']);
-        $this->assertEquals(6, $list[1]['size']);
-        $this->assertEquals('two.bin', $list[2]['name']);
-        $this->assertEquals(2, $list[2]['size']);
 
-        $data = $compress->decompress(
-            $zip_data,
-            array(
-                'action' => Horde_Compress_Zip::ZIP_DATA,
-                'info' => $list,
-                'key' => 0
-            )
+        $fixtures = array(
+            'one.txt' => array(4, "One\n"),
+            'sub/three.txt' => array(6, "Three\n"),
+            'two.bin' => array(2, "\x02\x0a")
         );
-        $this->assertEquals("One\n", $data);
-
-        $data = $compress->decompress(
-            $zip_data,
-            array(
-                'action' => Horde_Compress_Zip::ZIP_DATA,
-                'info' => $list,
-                'key' => 1
-            )
-        );
-        $this->assertEquals("Three\n", $data);
-
-        $data = $compress->decompress(
-            $zip_data,
-            array(
-                'action' => Horde_Compress_Zip::ZIP_DATA,
-                'info' => $list,
-                'key' => 2
-            )
-        );
-        $this->assertEquals("\x02\x0a", $data);
+        foreach ($fixtures as $key => $testValues) {
+            $found = false;
+            for ($i = 0; $i < 3; $i++) {
+                $file = $list[$i];
+                if ($file['name'] == $key) {
+                    $found = true;
+                    $this->assertEquals($testValues[0], $file['size']);
+                    $data = $compress->decompress(
+                        $zip_data,
+                        array(
+                            'action' => Horde_Compress_Zip::ZIP_DATA,
+                            'info' => $list,
+                            'key' => $i
+                        )
+                    );
+                    $this->assertEquals($testValues[1], $data);
+                }
+            }
+            if (!$found) {
+                $this->fail($key . ' not found.');
+            }
+        }
     }
 }

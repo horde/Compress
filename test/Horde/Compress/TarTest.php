@@ -112,14 +112,24 @@ class Horde_Compress_TarTest extends Horde_Test_Case
 
         $list = $compress->decompress($tar_data);
         $this->assertCount(3, $list);
-        $this->assertEquals('one.txt', $list[0]['name']);
-        $this->assertEquals(4, $list[0]['size']);
-        $this->assertEquals("One\n", $list[0]['data']);
-        $this->assertEquals('sub/three.txt', $list[1]['name']);
-        $this->assertEquals(6, $list[1]['size']);
-        $this->assertEquals("Three\n", $list[1]['data']);
-        $this->assertEquals('two.bin', $list[2]['name']);
-        $this->assertEquals(2, $list[2]['size']);
-        $this->assertEquals("\x02\x0a", $list[2]['data']);
+
+        $fixtures = array(
+            'one.txt' => array(4, "One\n"),
+            'sub/three.txt' => array(6, "Three\n"),
+            'two.bin' => array(2, "\x02\x0a")
+        );
+        foreach ($fixtures as $key => $testValues) {
+            $found = false;
+            foreach ($list as $file) {
+                if ($file['name'] == $key) {
+                    $found = true;
+                    $this->assertEquals($testValues[0], $file['size']);
+                    $this->assertEquals($testValues[1], $file['data']);
+                }
+            }
+            if (!$found) {
+                $this->fail($key . ' not found.');
+            }
+        }
     }
 }
