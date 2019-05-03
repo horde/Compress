@@ -2,7 +2,7 @@
 id: Compress
 name: Compress
 full: Compression library
-description: An API for various compression techniques.
+description: A library to wrap various compression techniques.
 list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Compress
