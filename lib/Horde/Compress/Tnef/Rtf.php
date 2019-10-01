@@ -130,20 +130,20 @@ class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
         $length_preload = strlen($preload);
 
         for ($cnt = 0; $cnt < $length_preload; $cnt++) {
-            $uncomp .= $preload{$cnt};
+            $uncomp .= $preload[$cnt];
             ++$out;
         }
 
         while ($out < ($this->_size + $length_preload)) {
             if (($flag_count++ % 8) == 0) {
-                $flags = ord($this->_data{$in++});
+                $flags = ord($this->_data[$in++]);
             } else {
                 $flags = $flags >> 1;
             }
 
             if (($flags & 1) != 0) {
-                $offset = ord($this->_data{$in++});
-                $length = ord($this->_data{$in++});
+                $offset = ord($this->_data[$in++]);
+                $length = ord($this->_data[$in++]);
                 $offset = ($offset << 4) | ($length >> 4);
                 $length = ($length & 0xF) + 2;
                 $offset = ((int)($out / 4096)) * 4096 + $offset;
@@ -156,7 +156,7 @@ class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
                     ++$out;
                 }
             } else {
-                $uncomp .= $this->_data{$in++};
+                $uncomp .= $this->_data[$in++];
                 ++$out;
             }
         }
