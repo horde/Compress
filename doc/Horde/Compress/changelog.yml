@@ -1,4 +1,15 @@
 ---
+2.2.3:
+  api: 2.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2019-02-11
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] PHP 7.4 compatibility fixes (Remi Collet <remi@famillecollet.com>, PR #2).
 2.2.2:
   api: 2.2.0
   state:
@@ -10,7 +21,7 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |+
     [mjr] Remove dependency on Math_BigInteger.
-    
+
 2.2.1:
   api: 2.2.0
   state:
