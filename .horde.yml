@@ -32,7 +32,7 @@ authors:
     active: false
     role: lead
 version:
-  release: 2.2.3
+  release: 2.2.4
   api: 2.2.0
 state:
   release: stable
