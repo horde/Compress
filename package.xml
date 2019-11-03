@@ -3,7 +3,7 @@
  <name>Horde_Compress</name>
  <channel>pear.horde.org</channel>
  <summary>Compression library</summary>
- <description>An API for various compression techniques.</description>
+ <description>A library to wrap various compression techniques.</description>
  <lead>
   <name>Jan Schneider</name>
   <user>jan</user>
@@ -28,7 +28,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </lead>
- <date>2019-02-11</date>
+ <date>2019-11-03</date>
  <version>
   <release>2.2.3</release>
   <api>2.2.0</api>
@@ -40,7 +40,6 @@
  <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
  <notes>
 * [mjr] PHP 7.4 compatibility fixes (Remi Collet &lt;remi@famillecollet.com&gt;, PR #2).
-* |+
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -1156,11 +1155,10 @@
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2019-02-11</date>
+   <date>2019-11-03</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * [mjr] PHP 7.4 compatibility fixes (Remi Collet &lt;remi@famillecollet.com&gt;, PR #2).
-* |+
    </notes>
   </release>
  </changelog>

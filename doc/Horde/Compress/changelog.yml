@@ -4,13 +4,12 @@
   state:
     release: stable
     api: stable
-  date: 2019-02-11
+  date: 2019-11-03
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [mjr] PHP 7.4 compatibility fixes (Remi Collet <remi@famillecollet.com>, PR #2).
-    |+
 2.2.2:
   api: 2.2.0
   state:
