@@ -3,7 +3,7 @@
  <name>Horde_Compress</name>
  <channel>pear.horde.org</channel>
  <summary>Compression library</summary>
- <description>An API for various compression techniques.</description>
+ <description>A library to wrap various compression techniques.</description>
  <lead>
   <name>Jan Schneider</name>
   <user>jan</user>
@@ -28,7 +28,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </lead>
- <date>2017-11-11</date>
+ <date>2020-03-11</date>
  <version>
   <release>2.2.2</release>
   <api>2.2.0</api>
@@ -354,7 +354,6 @@
        <file name="winmail2.dat" role="test" />
       </dir> <!-- /test/Horde/Compress/fixtures -->
       <file name="AllTests.php" role="test" />
-      <file name="Autoload.php" role="test" />
       <file name="bootstrap.php" role="test" />
       <file name="RarTest.php" role="test" />
       <file name="TarTest.php" role="test" />
@@ -554,7 +553,6 @@
    <install as="locale/zh_TW/LC_MESSAGES/Horde_Compress.mo" name="locale/zh_TW/LC_MESSAGES/Horde_Compress.mo" />
    <install as="locale/zh_TW/LC_MESSAGES/Horde_Compress.po" name="locale/zh_TW/LC_MESSAGES/Horde_Compress.po" />
    <install as="Horde/Compress/AllTests.php" name="test/Horde/Compress/AllTests.php" />
-   <install as="Horde/Compress/Autoload.php" name="test/Horde/Compress/Autoload.php" />
    <install as="Horde/Compress/bootstrap.php" name="test/Horde/Compress/bootstrap.php" />
    <install as="Horde/Compress/fixtures/directory/one.txt" name="test/Horde/Compress/fixtures/directory/one.txt" />
    <install as="Horde/Compress/fixtures/directory/sub/three.txt" name="test/Horde/Compress/fixtures/directory/sub/three.txt" />
@@ -1082,7 +1080,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-11-11</date>
+   <date>2020-03-11</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 
