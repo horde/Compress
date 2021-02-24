@@ -1,6 +1,8 @@
-----------
-v2.2.2-git
-----------
+------------
+v3.0.0alpha1
+------------
+
+[mjr] Remove dependency on Math_BigInteger.
 
 
 ------
