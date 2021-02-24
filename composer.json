@@ -53,9 +53,6 @@
     "autoload": {
         "psr-0": {
             "Horde_Compress": "lib/"
-        },
-        "psr-4": {
-            "Horde\\Compress\\": "src/"
         }
     }
 }
