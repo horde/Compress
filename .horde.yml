@@ -42,18 +42,18 @@ license:
   uri: http://www.horde.org/licenses/lgpl21
 dependencies:
   required:
-    php: ^5.3 || ^7
-    pear:
-      pear.horde.org/Horde_Exception: ^2
-      pear.horde.org/Horde_Mime: ^2.5
-      pear.horde.org/Horde_Translation: ^2.2
-      pear.horde.org/Horde_Util: ^2
+    php: ^7
+    composer:
+      horde/exception: ^3
+      horde/mime: ^3
+      horde/translation: ^3
+      horde/util: ^3
   optional:
-    pear:
-      pear.horde.org/Horde_Icalendar: ^2
-      pear.horde.org/Horde_Mail: ^2.5
-      pear.horde.org/Horde_Mapi: ^1
-      pear.horde.org/Horde_Stream_Filter: ^2
-      pear.horde.org/Horde_Test: ^2.1
+    composer:
+      horde/icalendar: ^3
+      horde/mail: ^3
+      horde/mapi: ^2
+      horde/stream_filter: ^3
+      horde/test: ^3
     ext:
       zlib: '*'
