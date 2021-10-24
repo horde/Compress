@@ -1,4 +1,25 @@
 ---
+2.2.5:
+  api: 2.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2021-10-24
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |+
+2.2.4:
+  api: 2.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2021-10-24
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] Fix PHP 8 ValueError (Ralf Becker <RalfBecker@outdoor-training.de>, PR #3).
 2.2.3:
   api: 2.2.0
   state:
