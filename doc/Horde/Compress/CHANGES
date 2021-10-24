@@ -2,7 +2,8 @@
 v2.2.4
 ------
 
-
+[mjr] Fix PHP 8 ValueError (Ralf Becker <RalfBecker@outdoor-training.de>, PR
+      #3).
 
 
 ------
@@ -18,7 +19,6 @@ v2.2.2
 ------
 
 [mjr] Remove dependency on Math_BigInteger.
-
 
 
 ------

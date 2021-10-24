@@ -28,7 +28,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </lead>
- <date>2019-11-03</date>
+ <date>2021-10-24</date>
  <version>
   <release>2.2.4</release>
   <api>2.2.0</api>
@@ -39,7 +39,7 @@
  </stability>
  <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
  <notes>
-* 
+* [mjr] Fix PHP 8 ValueError (Ralf Becker &lt;RalfBecker@outdoor-training.de&gt;, PR #3).
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -1170,10 +1170,10 @@
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2019-11-03</date>
+   <date>2021-10-24</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-* 
+* [mjr] Fix PHP 8 ValueError (Ralf Becker &lt;RalfBecker@outdoor-training.de&gt;, PR #3).
    </notes>
   </release>
  </changelog>
