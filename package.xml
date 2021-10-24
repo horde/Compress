@@ -30,7 +30,7 @@
  </lead>
  <date>2021-10-24</date>
  <version>
-  <release>2.2.4</release>
+  <release>2.2.5</release>
   <api>2.2.0</api>
  </version>
  <stability>
@@ -39,7 +39,7 @@
  </stability>
  <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
  <notes>
-* [mjr] Fix PHP 8 ValueError (Ralf Becker &lt;RalfBecker@outdoor-training.de&gt;, PR #3).
+* 
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -572,6 +572,45 @@
    </filelist>
  </phprelease>
  <changelog>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   <release>
    <version>
     <release>0.0.1</release>
@@ -1174,6 +1213,21 @@
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * [mjr] Fix PHP 8 ValueError (Ralf Becker &lt;RalfBecker@outdoor-training.de&gt;, PR #3).
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>2.2.5</release>
+    <api>2.2.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2021-10-24</date>
+   <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
+   <notes>
+* 
    </notes>
   </release>
  </changelog>
