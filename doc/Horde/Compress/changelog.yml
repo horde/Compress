@@ -4,12 +4,12 @@
   state:
     release: stable
     api: stable
-  date: 2019-11-03
+  date: 2021-10-24
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: |+
-    
+  notes: |
+    [mjr] Fix PHP 8 ValueError (Ralf Becker <RalfBecker@outdoor-training.de>, PR #3).
 2.2.3:
   api: 2.2.0
   state:
@@ -30,9 +30,8 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: |+
+  notes: |
     [mjr] Remove dependency on Math_BigInteger.
-    
 2.2.1:
   api: 2.2.0
   state:
