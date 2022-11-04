@@ -11,6 +11,9 @@
  * @package    Compress
  * @subpackage UnitTests
  */
+namespace Horde\Compress;
+use Horde_Test_Case;
+use \Horde_Compress;
 
 /**
  * Tests the RAR compressor.
@@ -22,21 +25,16 @@
  * @package    Compress
  * @subpackage UnitTests
  */
-class Horde_Compress_RarTest extends Horde_Test_Case
+class RarTest extends Horde_Test_Case
 {
     public function testInvalidRarData()
     {
+        $this->expectException('Horde_Compress_Exception');
+
         $compress = Horde_Compress::factory('Rar');
-
-        try {
-            $compress->decompress('1234');
-            $this->fail('Expected exception.');
-        } catch (Horde_Compress_Exception $e) {}
-
-        try {
-            $compress->decompress(Horde_Compress_Rar::BLOCK_START . '1234');
-            $this->fail('Expected exception.');
-        } catch (Horde_Compress_Exception $e) {}
+        $compress->decompress('1234');
+        
+        $compress->decompress(Horde_Compress_Rar::BLOCK_START . '1234');
 
         $compress->decompress(Horde_Compress_Rar::BLOCK_START . '1234567');
     }

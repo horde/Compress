@@ -11,6 +11,9 @@
  * @package    Compress
  * @subpackage UnitTests
  */
+namespace Horde\Compress;
+use Horde_Test_Case;
+use \Horde_Compress;
 
 /**
  * Tests the TAR compressor.
@@ -22,11 +25,11 @@
  * @package    Compress
  * @subpackage UnitTests
  */
-class Horde_Compress_TarTest extends Horde_Test_Case
+class TarTest extends Horde_Test_Case
 {
     protected $testdata;
 
-    public function setup()
+    public function setup(): void
     {
         $this->testdata = str_repeat("0123456789ABCDE", 1000);
     }
@@ -70,7 +73,7 @@ class Horde_Compress_TarTest extends Horde_Test_Case
         ));
 
         $this->assertNotEmpty($tar_data);
-        $this->assertInternalType('resource', $tar_data);
+        $this->assertIsResource($tar_data);
 
         return stream_get_contents($tar_data);
     }

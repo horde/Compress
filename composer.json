@@ -3,7 +3,7 @@
     "description": "Compression library",
     "type": "library",
     "homepage": "https://www.horde.org/libraries/Horde_Compress",
-    "license": "LGPL-2.1",
+    "license": "LGPL-2.1-only",
     "authors": [
         {
             "name": "Jan Schneider",
@@ -26,36 +26,47 @@
             "role": "lead"
         }
     ],
-    "version": "2.2.2",
-    "time": "2020-03-11",
+    "time": "2022-11-04",
     "repositories": [
         {
-            "type": "pear",
-            "url": "https://pear.horde.org"
+            "type": "composer",
+            "url": "https://horde-satis.maintaina.com"
         }
     ],
     "require": {
-        "php": "^5.3 || ^7",
-        "pear-pear.horde.org/Horde_Exception": "^2",
-        "pear-pear.horde.org/Horde_Mime": "^2.5",
-        "pear-pear.horde.org/Horde_Translation": "^2.2",
-        "pear-pear.horde.org/Horde_Util": "^2"
+        "php": "^7.4 || ^8",
+        "horde/exception": "^3 || dev-FRAMEWORK_6_0",
+        "horde/mime": "^3 || dev-FRAMEWORK_6_0",
+        "horde/translation": "^3 || dev-FRAMEWORK_6_0",
+        "horde/util": "^3 || dev-FRAMEWORK_6_0"
+    },
+    "require-dev": {
+        "horde/icalendar": "^3 || dev-FRAMEWORK_6_0",
+        "horde/mail": "^3 || dev-FRAMEWORK_6_0",
+        "horde/mapi": "^2 || dev-FRAMEWORK_6_0",
+        "horde/stream_filter": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
-        "pear-pear.horde.org/Horde_Icalendar": "^2",
-        "pear-pear.horde.org/Horde_Mail": "^2.5",
-        "pear-pear.horde.org/Horde_Mapi": "^1",
-        "pear-pear.horde.org/Horde_Stream_Filter": "^2",
-        "pear-pear.horde.org/Horde_Test": "^2.1",
+        "horde/icalendar": "^3 || dev-FRAMEWORK_6_0",
+        "horde/mail": "^3 || dev-FRAMEWORK_6_0",
+        "horde/mapi": "^2 || dev-FRAMEWORK_6_0",
+        "horde/stream_filter": "^3 || dev-FRAMEWORK_6_0",
         "ext-zlib": "*"
-    },
-    "replace": {
-        "pear-pear.horde.org/Horde_Compress": "2.*",
-        "pear-horde/Horde_Compress": "2.*"
     },
     "autoload": {
         "psr-0": {
             "Horde_Compress": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Horde\\Compress\\Test\\": "test/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
         }
     }
 }

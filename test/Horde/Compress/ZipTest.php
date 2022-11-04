@@ -11,6 +11,10 @@
  * @package    Compress
  * @subpackage UnitTests
  */
+namespace Horde\Compress;
+use Horde_Test_Case;
+use \Horde_Compress;
+use \Horde_Compress_Zip;
 
 /**
  * Tests the ZIP compressor.
@@ -22,11 +26,11 @@
  * @package    Compress
  * @subpackage UnitTests
  */
-class Horde_Compress_ZipTest extends Horde_Test_Case
+class ZipTest extends Horde_Test_Case
 {
     protected $testdata;
 
-    public function setup()
+    public function setup(): void
     {
         $this->testdata = str_repeat("0123456789ABCDE", 1000);
     }
@@ -70,7 +74,7 @@ class Horde_Compress_ZipTest extends Horde_Test_Case
         ));
 
         $this->assertNotEmpty($zip_data);
-        $this->assertInternalType('resource', $zip_data);
+        $this->assertIsResource($zip_data);
 
         return stream_get_contents($zip_data);
     }

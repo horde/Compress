@@ -1,6 +1,58 @@
-----------
-v2.2.2-git
-----------
+------------
+v3.0.0alpha4
+------------
+
+[rla] PHP 8.x compat metadata.
+
+
+------------
+v3.0.0alpha3
+------------
+
+|+
+
+------------
+v3.0.0alpha2
+------------
+
+|+
+
+------------
+v3.0.0alpha1
+------------
+
+[rla] Initial packaging for composer.
+
+
+------
+v2.2.5
+------
+
+|+
+
+------
+v2.2.4
+------
+
+[mjr] Fix PHP 8 ValueError (Ralf Becker <RalfBecker@outdoor-training.de>, PR
+      #3).
+
+
+------
+v2.2.3
+------
+
+[mjr] PHP 7.4 compatibility fixes (Remi Collet <remi@famillecollet.com>, PR
+      #2).
+
+
+------
+v2.2.2
+------
+
+[mjr] Fix PHP 8 ValueError (Ralf Becker <RalfBecker@outdoor-training.de>, PR
+      #3).
+[mjr] Remove dependency on Math_BigInteger.
 
 
 ------

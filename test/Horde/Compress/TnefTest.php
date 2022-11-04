@@ -11,6 +11,8 @@
  * @package    Compress
  * @subpackage UnitTests
  */
+namespace Horde\Compress;
+use Horde_Test_Case;
 
 /**
  * Tests the TNEF compressor.
@@ -22,11 +24,11 @@
  * @package    Compress
  * @subpackage UnitTests
  */
-class Horde_Compress_TnefTest extends Horde_Test_Case
+class TnefTest extends Horde_Test_Case
 {
     public $testdata;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!class_exists('Horde_Mapi')) {
             $this->markTestSkipped('Horde_Mapi is not available');
