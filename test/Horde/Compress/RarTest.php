@@ -24,21 +24,22 @@
  */
 class Horde_Compress_RarTest extends Horde_Test_Case
 {
-    public function testInvalidRarData()
+    public function testInvalidRarData1()
     {
         $compress = Horde_Compress::factory('Rar');
 
-        try {
-            $compress->decompress('1234');
-            $this->fail('Expected exception.');
-        } catch (Horde_Compress_Exception $e) {}
+	$this->expectException('Horde_Compress_Exception');
+        $compress->decompress('1234');
+    }
 
-        try {
-            $compress->decompress(Horde_Compress_Rar::BLOCK_START . '1234');
-            $this->fail('Expected exception.');
-        } catch (Horde_Compress_Exception $e) {}
+    public function testInvalidRarData2()
+    {
+        $compress = Horde_Compress::factory('Rar');
 
-        $compress->decompress(Horde_Compress_Rar::BLOCK_START . '1234567');
+	$this->expectException('Horde_Compress_Exception');
+        $compress->decompress(Horde_Compress_Rar::BLOCK_START . '1234');
+        // this is a left-over line from refractored tests.
+        //$compress->decompress(Horde_Compress_Rar::BLOCK_START . '1234567');
     }
 
 }

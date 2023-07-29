@@ -26,7 +26,7 @@ class Horde_Compress_ZipTest extends Horde_Test_Case
 {
     protected $testdata;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->testdata = str_repeat("0123456789ABCDE", 1000);
     }
@@ -70,7 +70,7 @@ class Horde_Compress_ZipTest extends Horde_Test_Case
         ));
 
         $this->assertNotEmpty($zip_data);
-        $this->assertInternalType('resource', $zip_data);
+        $this->assertIsResource($zip_data);
 
         return stream_get_contents($zip_data);
     }

@@ -26,7 +26,7 @@ class Horde_Compress_TarTest extends Horde_Test_Case
 {
     protected $testdata;
 
-    public function setup()
+    protected function setup(): void
     {
         $this->testdata = str_repeat("0123456789ABCDE", 1000);
     }
@@ -70,7 +70,7 @@ class Horde_Compress_TarTest extends Horde_Test_Case
         ));
 
         $this->assertNotEmpty($tar_data);
-        $this->assertInternalType('resource', $tar_data);
+        $this->assertIsResource($tar_data);
 
         return stream_get_contents($tar_data);
     }
