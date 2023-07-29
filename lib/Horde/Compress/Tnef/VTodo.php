@@ -20,6 +20,7 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Compress
  */
+#[\AllowDynamicProperties]
 class Horde_Compress_Tnef_VTodo extends Horde_Compress_Tnef_Object
 {
     const MAPI_TASK_STATUS          = 0x8101;
