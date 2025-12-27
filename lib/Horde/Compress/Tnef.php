@@ -267,6 +267,7 @@ class Horde_Compress_Tnef extends Horde_Compress_Base
      */
     public function decompress($data, array $params = array())
     {
+        $out = array();
         if ($this->_geti($data, 32) == self::SIGNATURE) {
             $this->_logger->debug(sprintf(
                 'TNEF: Signature: 0x%08X Key: 0x%04X',
@@ -286,7 +287,6 @@ class Horde_Compress_Tnef extends Horde_Compress_Base
             $this->_getx($data, $this->_geti($data, 32));
             $this->_geti($data, 16); //checksum
 
-            $out = array();
             $this->_msgInfo = new Horde_Compress_Tnef_MessageData($this->_logger);
             while (strlen($data) > 0) {
                 switch ($this->_geti($data, 8)) {
