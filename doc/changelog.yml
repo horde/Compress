@@ -9,7 +9,6 @@
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: |+
-    
 3.0.0alpha4:
   api: 3.0.0alpha1
   state:
@@ -52,6 +51,18 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [rla] Initial packaging for composer.
+3.0.0-beta1:
+  api: 3.0.0-beta1
+  state:
+    release: beta
+    api: beta
+  date: 2026-03-15
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    Initialize output array in decompress method
+    Development mode for Compress-3.0.0alpha5
 2.2.5:
   api: 2.2.0
   state:
@@ -295,17 +306,6 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [jan] Update Dutch translation (Arjen de Korte <build+horde@de-korte.org>).
-2.0.0:
-  api: 1.0.0
-  state:
-    release: stable
-    api: stable
-  date: 2012-10-30
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    First stable release for Horde 5.
 2.0.0beta2:
   api: 1.0.0
   state:
@@ -339,6 +339,17 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     First alpha release for Horde 5.
+2.0.0:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-10-30
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First stable release for Horde 5.
 1.0.8:
   api: 1.0.0
   state:
@@ -429,43 +440,6 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [jan] Updated Spanish translation.
-1.0.0:
-  api: 1.0.0
-  state:
-    release: stable
-    api: stable
-  date: 2011-04-06
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    First stable release for Horde 4.
-    [mms] Add $canCompress and $canDecompress properties to Horde_Compress_Base.
-    [mms] Drivers now extend Horde_Compress_Base.
-    [mms] Add Horde_Compress_Exception.
-    [mms] Do all zip compression on stream data in streams.
-1.0.0RC2:
-  api: 1.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-29
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    Second release candidate for Horde 4.
-1.0.0RC1:
-  api: 1.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-22
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    First release candidate for Horde 4.
 1.0.0beta1:
   api: 1.0.0
   state:
@@ -488,6 +462,43 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     First alpha release for Horde 4.
+1.0.0RC2:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Second release candidate for Horde 4.
+1.0.0RC1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-22
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First release candidate for Horde 4.
+1.0.0:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-04-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First stable release for Horde 4.
+    [mms] Add $canCompress and $canDecompress properties to Horde_Compress_Base.
+    [mms] Drivers now extend Horde_Compress_Base.
+    [mms] Add Horde_Compress_Exception.
+    [mms] Do all zip compression on stream data in streams.
 0.0.2:
   api: 0.0.2
   state:
