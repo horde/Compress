@@ -306,7 +306,7 @@ class TnefDecoder extends Base
             $value = null;
             $attrType = $this->readInt($data, 16);
             $attrName = $this->readInt($data, 16);
-            $namespace = false;
+            $namespace = null;
 
             if (($attrType & self::MAPI_MV_FLAG) !== 0) {
                 $haveMval = true;
