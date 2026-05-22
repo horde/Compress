@@ -1,44 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright 2017-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL-2.1). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  *
- * @author     Jan Schneider <jan@horde.org>
  * @category   Horde
  * @license    http://www.horde.org/licenses/lgpl21 LGPL-2.1
  * @package    Compress
- * @subpackage UnitTests
  */
 
-namespace Horde\Compress;
+namespace Horde\Compress\Test;
 
-use Horde_Test_Case;
 use Horde_Compress;
+use Horde_Compress_Tar;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Tests the TAR compressor.
- *
- * @author     Jan Schneider <jan@horde.org>
- * @category   Horde
- * @copyright  2017 Horde LLC
- * @license    http://www.horde.org/licenses/lgpl21 LGPL-2.1
- * @package    Compress
- * @subpackage UnitTests
- * @coversNothing
+ * Tests the legacy Horde_Compress_Tar driver.
  */
-class TarTest extends Horde_Test_Case
+#[CoversClass(Horde_Compress_Tar::class)]
+class TarLegacyTest extends TestCase
 {
-    protected $testdata;
+    private string $testdata;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         $this->testdata = str_repeat("0123456789ABCDE", 1000);
     }
 
-    public function testTarCreateString()
+    public function testTarCreateString(): string
     {
         $compress = Horde_Compress::factory('Tar');
 
@@ -53,15 +49,13 @@ class TarTest extends Horde_Test_Case
         return $tar_data;
     }
 
-    /**
-     * @depends testTarCreateString
-     */
-    public function testTarUntarString($tar_data)
+    #[Depends('testTarCreateString')]
+    public function testTarUntarString(string $tar_data): void
     {
-        $this->_testTarUntar($tar_data);
+        $this->assertTarUntar($tar_data);
     }
 
-    public function testTarCreateStream()
+    public function testTarCreateStream(): string
     {
         $compress = Horde_Compress::factory('Tar');
 
@@ -82,15 +76,13 @@ class TarTest extends Horde_Test_Case
         return stream_get_contents($tar_data);
     }
 
-    /**
-     * @depends testTarCreateStream
-     */
-    public function testTarUntarStream($tar_data)
+    #[Depends('testTarCreateStream')]
+    public function testTarUntarStream(string $tar_data): void
     {
-        $this->_testTarUntar($tar_data);
+        $this->assertTarUntar($tar_data);
     }
 
-    protected function _testTarUntar($tar_data)
+    private function assertTarUntar(string $tar_data): void
     {
         $compress = Horde_Compress::factory('Tar');
         $list = $compress->decompress($tar_data);
@@ -107,7 +99,7 @@ class TarTest extends Horde_Test_Case
         );
     }
 
-    public function testTarDirectory()
+    public function testTarDirectory(): void
     {
         $compress = Horde_Compress::factory('Tar');
 
@@ -118,9 +110,7 @@ class TarTest extends Horde_Test_Case
         $this->assertNotEmpty($tar_data);
 
         $list = $compress->decompress($tar_data);
-        usort($list, function ($a, $b) {
-            return strcmp($a['name'], $b['name']);
-        });
+        usort($list, fn($a, $b) => strcmp($a['name'], $b['name']));
         $this->assertCount(3, $list);
 
         $fixtures = [

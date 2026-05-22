@@ -1,45 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright 2011-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL-2.1). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
  *
- * @author     Michael Slusarz <slusarz@horde.org>
  * @category   Horde
  * @license    http://www.horde.org/licenses/lgpl21 LGPL-2.1
  * @package    Compress
- * @subpackage UnitTests
  */
 
-namespace Horde\Compress;
+namespace Horde\Compress\Test;
 
-use Horde_Test_Case;
 use Horde_Compress;
 use Horde_Compress_Zip;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Tests the ZIP compressor.
- *
- * @author     Michael Slusarz <slusarz@horde.org>
- * @category   Horde
- * @copyright  2011-2017 Horde LLC
- * @license    http://www.horde.org/licenses/lgpl21 LGPL-2.1
- * @package    Compress
- * @subpackage UnitTests
- * @coversNothing
+ * Tests the legacy Horde_Compress_Zip driver.
  */
-class ZipTest extends Horde_Test_Case
+#[CoversClass(Horde_Compress_Zip::class)]
+class ZipLegacyTest extends TestCase
 {
-    protected $testdata;
+    private string $testdata;
 
-    public function setup(): void
+    protected function setUp(): void
     {
         $this->testdata = str_repeat("0123456789ABCDE", 1000);
     }
 
-    public function testZipCreateString()
+    public function testZipCreateString(): string
     {
         $compress = Horde_Compress::factory('Zip');
 
@@ -54,15 +49,13 @@ class ZipTest extends Horde_Test_Case
         return $zip_data;
     }
 
-    /**
-     * @depends testZipCreateString
-     */
-    public function testZipUnzipString($zip_data)
+    #[Depends('testZipCreateString')]
+    public function testZipUnzipString(string $zip_data): void
     {
-        $this->_testZipUnzip($zip_data);
+        $this->assertZipUnzip($zip_data);
     }
 
-    public function testZipCreateStream()
+    public function testZipCreateStream(): string
     {
         $compress = Horde_Compress::factory('Zip');
 
@@ -83,15 +76,13 @@ class ZipTest extends Horde_Test_Case
         return stream_get_contents($zip_data);
     }
 
-    /**
-     * @depends testZipCreateStream
-     */
-    public function testZipUnzipStream($zip_data)
+    #[Depends('testZipCreateStream')]
+    public function testZipUnzipStream(string $zip_data): void
     {
-        $this->_testZipUnzip($zip_data);
+        $this->assertZipUnzip($zip_data);
     }
 
-    protected function _testZipUnzip($zip_data)
+    private function assertZipUnzip(string $zip_data): void
     {
         $compress = Horde_Compress::factory('Zip');
         $list = $compress->decompress(
@@ -125,7 +116,7 @@ class ZipTest extends Horde_Test_Case
         $this->assertEquals($this->testdata, $data);
     }
 
-    public function testDatesBefore1980()
+    public function testDatesBefore1980(): void
     {
         $compress = Horde_Compress::factory('Zip');
 
@@ -138,7 +129,7 @@ class ZipTest extends Horde_Test_Case
         $this->assertNotEmpty($zip_data);
     }
 
-    public function testZipDirectory()
+    public function testZipDirectory(): void
     {
         $compress = Horde_Compress::factory('Zip');
 
@@ -152,9 +143,7 @@ class ZipTest extends Horde_Test_Case
             $zip_data,
             ['action' => Horde_Compress_Zip::ZIP_LIST]
         );
-        usort($list, function ($a, $b) {
-            return strcmp($a['name'], $b['name']);
-        });
+        usort($list, fn($a, $b) => strcmp($a['name'], $b['name']));
         $this->assertCount(3, $list);
 
         $fixtures = [
