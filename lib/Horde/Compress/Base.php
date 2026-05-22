@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2011-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2011-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -50,7 +51,7 @@ class Horde_Compress_Base
      *
      * @param array $options  Additional options for the compressor backend.
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         if (!empty($options['logger'])) {
             $this->_logger = $options['logger'];
@@ -69,7 +70,7 @@ class Horde_Compress_Base
      * @return mixed  The compressed data.
      * @throws Horde_Compress_Exception
      */
-    public function compress($data, array $params = array())
+    public function compress($data, array $params = [])
     {
         return $data;
     }
@@ -86,7 +87,7 @@ class Horde_Compress_Base
      * @return mixed  The compressed data.
      * @throws Horde_Compress_Exception
      */
-    public function compressDirectory($directory, array $params = array())
+    public function compressDirectory($directory, array $params = [])
     {
         if (!$this->canCompress) {
             throw new Horde_Compress_Exception(
@@ -102,18 +103,18 @@ class Horde_Compress_Base
             )
         );
         $regexp = '/^' . preg_quote($directory . '/', '/') . '/';
-        $data = array();
+        $data = [];
         foreach ($iterator as $file) {
             $content = '';
             foreach ($file->openFile() as $line) {
                 $content .= $line;
             }
-            $data[] = array(
+            $data[] = [
                 'name' => preg_replace($regexp, '', $file->getPathName()),
                 'data' => $content,
                 'time' => $file->getMTime(),
                 'spl'  => $file,
-            );
+            ];
         }
 
         return $this->compress($data, $params);
@@ -129,7 +130,7 @@ class Horde_Compress_Base
      * @return mixed  The decompressed data.
      * @throws Horde_Compress_Exception
      */
-    public function decompress($data, array $params = array())
+    public function decompress($data, array $params = [])
     {
         return $data;
     }

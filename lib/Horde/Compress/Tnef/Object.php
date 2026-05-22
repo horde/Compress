@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -41,7 +42,7 @@ class Horde_Compress_Tnef_Object
     protected $_options;
 
 
-    public function __construct($logger, $data = null, $options = array())
+    public function __construct($logger, $data = null, $options = [])
     {
         $this->_data = $data;
         $this->_logger = $logger;
@@ -57,9 +58,7 @@ class Horde_Compress_Tnef_Object
      * @param integer $size       The byte length of the data, as reported by
      *                            the MAPI data.
      */
-    public function setTnefAttribute($attribute, $value, $size)
-    {
-    }
+    public function setTnefAttribute($attribute, $value, $size) {}
 
     /**
      * Allow this object to set any MAPI attributes it needs to know about,
@@ -68,10 +67,7 @@ class Horde_Compress_Tnef_Object
      * @param integer $type  The attribute type descriptor.
      * @param integer $name  The attribute name descriptor.
      */
-    public function setMapiAttribute($type, $name, $value)
-    {
-
-    }
+    public function setMapiAttribute($type, $name, $value) {}
 
     /**
      * Output the data for this object in an array.
@@ -82,9 +78,7 @@ class Horde_Compress_Tnef_Object
      *   - name: (string)    The filename.
      *   - stream: (string)  The file data.
      */
-    public function toArray()
-    {
-    }
+    public function toArray() {}
 
     /**
      * Pop specified number of bytes from the buffer.

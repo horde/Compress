@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2008-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2008-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -24,7 +25,7 @@
  */
 class Horde_Compress_Rar extends Horde_Compress_Base
 {
-    const BLOCK_START = "\x52\x61\x72\x21\x1a\x07\x00";
+    public const BLOCK_START = "\x52\x61\x72\x21\x1a\x07\x00";
 
     /**
      */
@@ -35,14 +36,14 @@ class Horde_Compress_Rar extends Horde_Compress_Base
      *
      * @var array
      */
-    protected $_methods = array(
+    protected $_methods = [
         0x30 => 'Store',
         0x31 => 'Fastest',
         0x32 => 'Fast',
         0x33 => 'Normal',
         0x34 => 'Good',
-        0x35 => 'Best'
-    );
+        0x35 => 'Best',
+    ];
 
     /**
      * @return array  Info on the compressed file:
@@ -59,7 +60,7 @@ class Horde_Compress_Rar extends Horde_Compress_Base
      *
      * @throws Horde_Compress_Exception
      */
-    public function decompress($data, array $params = array())
+    public function decompress($data, array $params = [])
     {
         $blockStart = strpos($data, self::BLOCK_START);
         if ($blockStart === false) {
@@ -68,7 +69,7 @@ class Horde_Compress_Rar extends Horde_Compress_Base
 
         $data_len = strlen($data);
         $position = $blockStart + 7;
-        $return_array = array();
+        $return_array = [];
 
         while ($position < $data_len) {
             if ($position + 7 > $data_len) {
@@ -85,54 +86,54 @@ class Horde_Compress_Rar extends Horde_Compress_Base
             $head_size -= 7;
 
             switch ($head_type) {
-            case 0x73:
-                /* Archive header */
-                $position += $head_size;
-                break;
+                case 0x73:
+                    /* Archive header */
+                    $position += $head_size;
+                    break;
 
-            case 0x74:
-                /* File Header */
-                $info = unpack(
-                    'VPacked/VUnpacked/COS/VCRC32/VTime/CVersion/CMethod/vLength/vAttrib',
-                    substr($data, $position)
-                );
-                $year = (($info['Time'] >> 25) & 0x7f) + 80;
-                $name = substr($data, $position + 25, $info['Length']);
-                if ($unicode = strpos($name, "\0")) {
-                    $name = substr($name, 0, $unicode);
-                }
+                case 0x74:
+                    /* File Header */
+                    $info = unpack(
+                        'VPacked/VUnpacked/COS/VCRC32/VTime/CVersion/CMethod/vLength/vAttrib',
+                        substr($data, $position)
+                    );
+                    $year = (($info['Time'] >> 25) & 0x7f) + 80;
+                    $name = substr($data, $position + 25, $info['Length']);
+                    if ($unicode = strpos($name, "\0")) {
+                        $name = substr($name, 0, $unicode);
+                    }
 
-                $return_array[] = array(
-                    'name' => $name,
-                    'size' => $info['Unpacked'],
-                    'csize' => $info['Packed'],
-                    'date' => mktime(
-                        (($info['Time'] >> 11) & 0x1f),
-                        (($info['Time'] >> 5) & 0x3f),
-                        (($info['Time'] << 1) & 0x3e),
-                        (($info['Time'] >> 21) & 0x07),
-                        (($info['Time'] >> 16) & 0x1f),
-                        $year < 1900 ? $year + 1900 : $year
-                    ),
-                    'method' => $this->_methods[$info['Method']],
-                    'attr' => (($info['Attrib'] & 0x10) ? 'D' : '-') .
-                              (($info['Attrib'] & 0x20) ? 'A' : '-') .
-                              (($info['Attrib'] & 0x03) ? 'S' : '-') .
-                              (($info['Attrib'] & 0x02) ? 'H' : '-') .
-                              (($info['Attrib'] & 0x01) ? 'R' : '-')
-                );
+                    $return_array[] = [
+                        'name' => $name,
+                        'size' => $info['Unpacked'],
+                        'csize' => $info['Packed'],
+                        'date' => mktime(
+                            (($info['Time'] >> 11) & 0x1f),
+                            (($info['Time'] >> 5) & 0x3f),
+                            (($info['Time'] << 1) & 0x3e),
+                            (($info['Time'] >> 21) & 0x07),
+                            (($info['Time'] >> 16) & 0x1f),
+                            $year < 1900 ? $year + 1900 : $year
+                        ),
+                        'method' => $this->_methods[$info['Method']],
+                        'attr' => (($info['Attrib'] & 0x10) ? 'D' : '-')
+                                  . (($info['Attrib'] & 0x20) ? 'A' : '-')
+                                  . (($info['Attrib'] & 0x03) ? 'S' : '-')
+                                  . (($info['Attrib'] & 0x02) ? 'H' : '-')
+                                  . (($info['Attrib'] & 0x01) ? 'R' : '-'),
+                    ];
 
-                $position += $head_size + $info['Packed'];
-                break;
+                    $position += $head_size + $info['Packed'];
+                    break;
 
-            default:
-                if ($head_size == -7) {
-                    /* We've already added 7 bytes above. If we remove those
-                     * same 7 bytes, we will enter an infinite loop. */
-                    throw new Horde_Compress_Exception(Horde_Compress_Translation::t("Invalid RAR data."));
-                }
-                $position += $head_size;
-                break;
+                default:
+                    if ($head_size == -7) {
+                        /* We've already added 7 bytes above. If we remove those
+                         * same 7 bytes, we will enter an infinite loop. */
+                        throw new Horde_Compress_Exception(Horde_Compress_Translation::t("Invalid RAR data."));
+                    }
+                    $position += $head_size;
+                    break;
             }
         }
 

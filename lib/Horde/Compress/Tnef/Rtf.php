@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -22,8 +23,8 @@
  */
 class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
 {
-    const UNCOMPRESSED = 0x414c454d;
-    const COMPRESSED   = 0x75465a4c;
+    public const UNCOMPRESSED = 0x414c454d;
+    public const COMPRESSED   = 0x75465a4c;
 
     /**
      * RTF content.
@@ -72,12 +73,12 @@ class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
      */
     public function toArray()
     {
-        return array(
+        return [
             'type'    => 'application',
             'subtype' => 'rtf',
             'name'    => 'Untitled.rtf',
-            'stream'  => $this->_content
-        );
+            'stream'  => $this->_content,
+        ];
     }
 
     /**
@@ -98,20 +99,25 @@ class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
         $magic = $this->_geti($this->_data, 32);
         $crc = $this->_geti($this->_data, 32);
 
-        $this->_logger->debug(sprintf(
-            'TNEF: compressed size: %s, size: %s, magic: %s, CRC: %s',
-            $c_size, $this->_size, $magic, $crc)
+        $this->_logger->debug(
+            sprintf(
+                'TNEF: compressed size: %s, size: %s, magic: %s, CRC: %s',
+                $c_size,
+                $this->_size,
+                $magic,
+                $crc
+            )
         );
 
         switch ($magic) {
-        case self::COMPRESSED:
-            $this->_decompress();
-            break;
-        case self::UNCOMPRESSED:
-            $this->_content = $this->_data;
-            break;
-        default:
-            $this->_logger->notice('TNEF: Unknown RTF compression.');
+            case self::COMPRESSED:
+                $this->_decompress();
+                break;
+            case self::UNCOMPRESSED:
+                $this->_content = $this->_data;
+                break;
+            default:
+                $this->_logger->notice('TNEF: Unknown RTF compression.');
         }
     }
 
@@ -146,13 +152,13 @@ class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
                 $length = ord($this->_data[$in++]);
                 $offset = ($offset << 4) | ($length >> 4);
                 $length = ($length & 0xF) + 2;
-                $offset = ((int)($out / 4096)) * 4096 + $offset;
+                $offset = ((int) ($out / 4096)) * 4096 + $offset;
                 if ($offset >= $out) {
                     $offset -= 4096;
                 }
                 $end = $offset + $length;
                 while ($offset < $end) {
-                    $uncomp.= $uncomp[$offset++];
+                    $uncomp .= $uncomp[$offset++];
                     ++$out;
                 }
             } else {
@@ -175,177 +181,177 @@ class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
     protected function _rtf2text($text)
     {
         $document = '';
-        $stack = array();
+        $stack = [];
         $j = -1;
 
         // Read the data character-by- character…
         for ($i = 0, $len = strlen($text); $i < $len; $i++) {
             $c = $text[$i];
             switch ($c) {
-            case '\\':
-                // Key Word
-                $nextCharacter = $text[$i + 1];
+                case '\\':
+                    // Key Word
+                    $nextCharacter = $text[$i + 1];
 
-                // If it is another backslash or nonbreaking space or hyphen,
-                // then the character is plain text and add it to the output stream.
-                if ($nextCharacter == '\\' && $this->_rtfIsPlain($stack[$j])) {
-                    $document .= '\\';
-                } elseif ($nextCharacter == '~' && $this->_rtfIsPlain($stack[$j])) {
-                    $document .= ' ';
-                } elseif ($nextCharacter == '_' && $this->_rtfIsPlain($stack[$j])) {
-                    $document .= '-';
-                } elseif ($nextCharacter == '*') {
-                    // Add to the stack.
-                    $stack[$j]['*'] = true;
-                } elseif ($nextCharacter == "'") {
-                    // If it is a single quote, read next two characters that
-                    // are the hexadecimal notation of a character we should add
-                    // to the output stream.
-                    $hex = substr($text, $i + 2, 2);
-                    if ($this->_rtfIsPlain($stack[$j])) {
-                        $document .= html_entity_decode('&#' . hexdec($hex) .';');
-                    }
-                    //Shift the pointer.
-                    $i += 2;
-                } elseif ($nextCharacter >= 'a' && $nextCharacter <= 'z'
-                          || $nextCharacter >= 'A' && $nextCharacter <= 'Z') {
-                    // Since, we’ve found the alphabetic character, the next
-                    // characters are control words and, possibly, some digit
-                    // parameter.
-                    $word = '';
-                    $param = null;
-                    // Start reading characters after the backslash.
-                    for ($k = $i + 1, $m = 0; $k < strlen($text); $k++, $m++) {
-                        $nextCharacter = $text[$k];
-                        // If the current character is a letter and there were
-                        // no digits before it, then we’re still reading the
-                        // control word. If there were digits, we should stop
-                        // since we reach the end of the control word.
-                        if ($nextCharacter >= 'a' && $nextCharacter <= 'z'
-                            || $nextCharacter >= 'A' && $nextCharacter <= 'Z') {
-                            if (!empty($param)) {
+                    // If it is another backslash or nonbreaking space or hyphen,
+                    // then the character is plain text and add it to the output stream.
+                    if ($nextCharacter == '\\' && $this->_rtfIsPlain($stack[$j])) {
+                        $document .= '\\';
+                    } elseif ($nextCharacter == '~' && $this->_rtfIsPlain($stack[$j])) {
+                        $document .= ' ';
+                    } elseif ($nextCharacter == '_' && $this->_rtfIsPlain($stack[$j])) {
+                        $document .= '-';
+                    } elseif ($nextCharacter == '*') {
+                        // Add to the stack.
+                        $stack[$j]['*'] = true;
+                    } elseif ($nextCharacter == "'") {
+                        // If it is a single quote, read next two characters that
+                        // are the hexadecimal notation of a character we should add
+                        // to the output stream.
+                        $hex = substr($text, $i + 2, 2);
+                        if ($this->_rtfIsPlain($stack[$j])) {
+                            $document .= html_entity_decode('&#' . hexdec($hex) . ';');
+                        }
+                        //Shift the pointer.
+                        $i += 2;
+                    } elseif ($nextCharacter >= 'a' && $nextCharacter <= 'z'
+                              || $nextCharacter >= 'A' && $nextCharacter <= 'Z') {
+                        // Since, we’ve found the alphabetic character, the next
+                        // characters are control words and, possibly, some digit
+                        // parameter.
+                        $word = '';
+                        $param = null;
+                        // Start reading characters after the backslash.
+                        for ($k = $i + 1, $m = 0; $k < strlen($text); $k++, $m++) {
+                            $nextCharacter = $text[$k];
+                            // If the current character is a letter and there were
+                            // no digits before it, then we’re still reading the
+                            // control word. If there were digits, we should stop
+                            // since we reach the end of the control word.
+                            if ($nextCharacter >= 'a' && $nextCharacter <= 'z'
+                                || $nextCharacter >= 'A' && $nextCharacter <= 'Z') {
+                                if (!empty($param)) {
+                                    break;
+                                }
+                                $word .= $nextCharacter;
+                            } elseif ($nextCharacter >= '0' && $nextCharacter <= '9') {
+                                // If it is a digit, store the parameter.
+                                $param .= $nextCharacter;
+                            } elseif ($nextCharacter == '-') {
+                                // Since minus sign may occur only before a digit
+                                // parameter, check whether $param is empty.
+                                // Otherwise, we reach the end of the control word.
+                                if (!empty($param)) {
+                                    break;
+                                }
+                                $param .= $nextCharacter;
+                            } else {
                                 break;
                             }
-                            $word .= $nextCharacter;
-                        } elseif ($nextCharacter >= '0' && $nextCharacter <= '9') {
-                            // If it is a digit, store the parameter.
-                            $param .= $nextCharacter;
-                        } elseif ($nextCharacter == '-') {
-                            // Since minus sign may occur only before a digit
-                            // parameter, check whether $param is empty.
-                            // Otherwise, we reach the end of the control word.
-                            if (!empty($param)) {
+                        }
+
+                        // Shift the pointer on the number of read characters.
+                        $i += $m - 1;
+
+                        // Start analyzing.We are interested mostly in control words
+                        $toText = '';
+                        switch (Horde_String::lower($word)) {
+                            // If the control word is "u", then its parameter is
+                            // the decimal notation of the Unicode character that
+                            // should be added to the output stream. We need to
+                            // check whether the stack contains \ucN control word.
+                            // If it does, we should remove the N characters from
+                            // the output stream.
+                            case 'u':
+                                $toText .= html_entity_decode('&#x' . dechex($param) . ';');
+                                $ucDelta = @$stack[$j]['uc'];
+                                if ($ucDelta > 0) {
+                                    $i += $ucDelta;
+                                }
                                 break;
-                            }
-                            $param .= $nextCharacter;
-                        } else {
-                            break;
+                            case 'par':
+                            case 'page':
+                            case 'column':
+                            case 'line':
+                            case 'lbr':
+                                $toText .= "\n";
+                                break;
+                            case 'emspace':
+                            case 'enspace':
+                            case 'qmspace':
+                                $toText .= ' ';
+                                break;
+                            case 'tab':
+                                $toText .= "\t";
+                                break;
+                            case 'chdate':
+                                $toText .= date('m.d.Y');
+                                break;
+                            case 'chdpl':
+                                $toText .= date('l, j F Y');
+                                break;
+                            case 'chdpa':
+                                $toText .= date('D, j M Y');
+                                break;
+                            case 'chtime':
+                                $toText .= date('H:i:s');
+                                break;
+                            case 'emdash':
+                                $toText .= html_entity_decode('&mdash;');
+                                break;
+                            case 'endash':
+                                $toText .= html_entity_decode('&ndash;');
+                                break;
+                            case 'bullet':
+                                $toText .= html_entity_decode('&#149;');
+                                break;
+                            case 'lquote':
+                                $toText .= html_entity_decode('&lsquo;');
+                                break;
+                            case 'rquote':
+                                $toText .= html_entity_decode('&rsquo;');
+                                break;
+                            case 'ldblquote':
+                                $toText .= html_entity_decode('&laquo;');
+                                break;
+                            case 'rdblquote':
+                                $toText .= html_entity_decode('&raquo;');
+                                break;
+                            default:
+                                $stack[$j][Horde_String::lower($word)] = empty($param) ? true : $param;
+                                break;
+                        }
+                        // Add data to the output stream if required.
+                        if ($this->_rtfIsPlain($stack[$j])) {
+                            $document .= $toText;
                         }
                     }
-
-                    // Shift the pointer on the number of read characters.
-                    $i += $m - 1;
-
-                    // Start analyzing.We are interested mostly in control words
-                    $toText = '';
-                    switch (Horde_String::lower($word)) {
-                    // If the control word is "u", then its parameter is
-                    // the decimal notation of the Unicode character that
-                    // should be added to the output stream. We need to
-                    // check whether the stack contains \ucN control word.
-                    // If it does, we should remove the N characters from
-                    // the output stream.
-                    case 'u':
-                        $toText .= html_entity_decode('&#x' . dechex($param) .';');
-                        $ucDelta = @$stack[$j]['uc'];
-                        if ($ucDelta > 0) {
-                            $i += $ucDelta;
-                        }
-                        break;
-                    case 'par':
-                    case 'page':
-                    case 'column':
-                    case 'line':
-                    case 'lbr':
-                        $toText .= "\n";
-                        break;
-                    case 'emspace':
-                    case 'enspace':
-                    case 'qmspace':
-                        $toText .= ' ';
-                        break;
-                    case 'tab':
-                        $toText .= "\t";
-                        break;
-                    case 'chdate':
-                        $toText .= date('m.d.Y');
-                        break;
-                    case 'chdpl':
-                        $toText .= date('l, j F Y');
-                        break;
-                    case 'chdpa':
-                        $toText .= date('D, j M Y');
-                        break;
-                    case 'chtime':
-                        $toText .= date('H:i:s');
-                        break;
-                    case 'emdash':
-                        $toText .= html_entity_decode('&mdash;');
-                        break;
-                    case 'endash':
-                        $toText .= html_entity_decode('&ndash;');
-                        break;
-                    case 'bullet':
-                        $toText .= html_entity_decode('&#149;');
-                        break;
-                    case 'lquote':
-                        $toText .= html_entity_decode('&lsquo;');
-                        break;
-                    case 'rquote':
-                        $toText .= html_entity_decode('&rsquo;');
-                        break;
-                    case 'ldblquote':
-                        $toText .= html_entity_decode('&laquo;');
-                        break;
-                    case 'rdblquote':
-                        $toText .= html_entity_decode('&raquo;');
-                        break;
-                    default:
-                        $stack[$j][Horde_String::lower($word)] = empty($param) ? true : $param;
-                        break;
+                    $i++;
+                    break;
+                case '{':
+                    // New subgroup starts, add new stack element and write the data
+                    // from previous stack element to it.
+                    if (!empty($stack[$j])) {
+                        array_push($stack, $stack[$j++]);
+                    } else {
+                        $j++;
                     }
-                    // Add data to the output stream if required.
-                    if ($this->_rtfIsPlain($stack[$j])) {
-                        $document .= $toText;
+                    break;
+                case '}':
+                    array_pop($stack);
+                    $j--;
+                    break;
+                case '\0':
+                case '\r':
+                case '\f':
+                case '\n':
+                    // Junk
+                    break;
+                default:
+                    // Add other data to the output stream if required.
+                    if (!empty($stack[$j]) && $this->_rtfIsPlain($stack[$j])) {
+                        $document .= $c;
                     }
-                }
-                $i++;
-                break;
-            case '{':
-                // New subgroup starts, add new stack element and write the data
-                // from previous stack element to it.
-                if (!empty($stack[$j])) {
-                    array_push($stack, $stack[$j++]);
-                } else {
-                    $j++;
-                }
-                break;
-            case '}':
-                array_pop($stack);
-                $j--;
-                break;
-            case '\0':
-            case '\r':
-            case '\f':
-            case '\n':
-                // Junk
-                break;
-            default:
-                // Add other data to the output stream if required.
-                if (!empty($stack[$j]) && $this->_rtfIsPlain($stack[$j])) {
-                    $document .= $c;
-                }
-                break;
+                    break;
             }
         }
 
@@ -354,7 +360,7 @@ class Horde_Compress_Tnef_Rtf extends Horde_Compress_Tnef_Object
 
     protected function _rtfIsPlain($s)
     {
-        $notPlain = array('*', 'fonttbl', 'colortbl', 'datastore', 'themedata', 'stylesheet');
+        $notPlain = ['*', 'fonttbl', 'colortbl', 'datastore', 'themedata', 'stylesheet'];
         for ($i = 0; $i < count($notPlain); $i++) {
             if (!empty($s[$notPlain[$i]])) {
                 return false;

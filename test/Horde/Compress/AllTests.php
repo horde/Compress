@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2011-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2011-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL-2.1). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -24,6 +25,6 @@
  */
 
 if (!class_exists('Horde_Test_AllTests')) {
-	require_once 'Horde/Test/AllTests.php';
+    require_once 'Horde/Test/AllTests.php';
 }
 Horde_Test_AllTests::init(__FILE__)->run();

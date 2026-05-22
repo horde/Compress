@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2013-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2013-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL-2.1). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -11,7 +12,9 @@
  * @package    Compress
  * @subpackage UnitTests
  */
+
 namespace Horde\Compress;
+
 use Horde_Test_Case;
 
 /**
@@ -23,6 +26,7 @@ use Horde_Test_Case;
  * @license    http://www.horde.org/licenses/lgpl21 LGPL-2.1
  * @package    Compress
  * @subpackage UnitTests
+ * @coversNothing
  */
 class TnefTest extends Horde_Test_Case
 {
@@ -43,7 +47,7 @@ class TnefTest extends Horde_Test_Case
         $eml = file_get_contents(__DIR__ . '/fixtures/Itip_Reply.eml');
         $mime = Horde_Mime_Part::parseMessage($eml);
         $winmail = $mime->getPart(2)->getContents();
-        $tnef = Horde_Compress::factory('Tnef', array('logger' => $log->getLogger()));
+        $tnef = Horde_Compress::factory('Tnef', ['logger' => $log->getLogger()]);
         $tnef_data = $tnef->decompress($winmail);
 
         // Test the generated iCalendar.
@@ -113,8 +117,8 @@ class TnefTest extends Horde_Test_Case
         try {
             $tnef_data = $tnef->decompress($data);
         } catch (Horde_Compress_Exception $e) {
-            if (($prev = $e->getPrevious()) &&
-                ($prev instanceof Horde_Mapi_Exception)) {
+            if (($prev = $e->getPrevious())
+                && ($prev instanceof Horde_Mapi_Exception)) {
                 $this->markTestSkipped();
             }
             throw $e;

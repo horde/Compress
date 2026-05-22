@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2017-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL-2.1). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -11,9 +12,11 @@
  * @package    Compress
  * @subpackage UnitTests
  */
+
 namespace Horde\Compress;
+
 use Horde_Test_Case;
-use \Horde_Compress;
+use Horde_Compress;
 
 /**
  * Tests the TAR compressor.
@@ -24,6 +27,7 @@ use \Horde_Compress;
  * @license    http://www.horde.org/licenses/lgpl21 LGPL-2.1
  * @package    Compress
  * @subpackage UnitTests
+ * @coversNothing
  */
 class TarTest extends Horde_Test_Case
 {
@@ -38,11 +42,11 @@ class TarTest extends Horde_Test_Case
     {
         $compress = Horde_Compress::factory('Tar');
 
-        $tar_data = $compress->compress(array(array(
+        $tar_data = $compress->compress([[
             'data' => $this->testdata,
             'name' => 'test.txt',
-            'time' => 1000000000
-        )));
+            'time' => 1000000000,
+        ]]);
 
         $this->assertNotEmpty($tar_data);
 
@@ -64,13 +68,13 @@ class TarTest extends Horde_Test_Case
         $fd = fopen('php://temp', 'r+');
         fwrite($fd, $this->testdata);
 
-        $tar_data = $compress->compress(array(array(
+        $tar_data = $compress->compress([[
             'data' => $fd,
             'name' => 'test.txt',
-            'time' => 1000000000
-        )), array(
-            'stream' => true
-        ));
+            'time' => 1000000000,
+        ]], [
+            'stream' => true,
+        ]);
 
         $this->assertNotEmpty($tar_data);
         $this->assertIsResource($tar_data);
@@ -91,14 +95,14 @@ class TarTest extends Horde_Test_Case
         $compress = Horde_Compress::factory('Tar');
         $list = $compress->decompress($tar_data);
         $this->assertEquals(
-            array(array(
+            [[
                 'attr' => '----------',
                 'date' => 1000000000,
                 'name' => 'test.txt',
                 'size' => 15000,
                 'type' => 'File',
-                'data' => $this->testdata
-            )),
+                'data' => $this->testdata,
+            ]],
             $list
         );
     }
@@ -119,11 +123,11 @@ class TarTest extends Horde_Test_Case
         });
         $this->assertCount(3, $list);
 
-        $fixtures = array(
-            'one.txt' => array(4, "One\n"),
-            'sub/three.txt' => array(6, "Three\n"),
-            'two.bin' => array(2, "\x02\x0a")
-        );
+        $fixtures = [
+            'one.txt' => [4, "One\n"],
+            'sub/three.txt' => [6, "Three\n"],
+            'two.bin' => [2, "\x02\x0a"],
+        ];
         foreach ($fixtures as $key => $testValues) {
             $found = false;
             foreach ($list as $file) {

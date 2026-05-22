@@ -1,6 +1,9 @@
 <?php
+
+use Horde\Util\Util;
+
 /**
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -34,21 +37,21 @@ class Horde_Compress_Gzip extends Horde_Compress_Base
      *
      * @var array
      */
-    protected $_flags = array(
+    protected $_flags = [
         'FTEXT'     =>  0x01,
         'FHCRC'     =>  0x02,
         'FEXTRA'    =>  0x04,
         'FNAME'     =>  0x08,
-        'FCOMMENT'  =>  0x10
-    );
+        'FCOMMENT'  =>  0x10,
+    ];
 
     /**
      * @return string  The uncompressed data.
      */
-    public function decompress($data, array $params = array())
+    public function decompress($data, array $params = [])
     {
         /* If gzip is not compiled into PHP, return now. */
-        if (!Horde_Util::extensionExists('zlib')) {
+        if (!Util::extensionExists('zlib')) {
             throw new Horde_Compress_Exception(Horde_Compress_Translation::t("This server can't uncompress gzip files."));
         }
 

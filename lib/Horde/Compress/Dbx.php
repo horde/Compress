@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2003-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2003-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -35,7 +36,7 @@ class Horde_Compress_Dbx extends Horde_Compress_Base
      *
      * @var array
      */
-    protected $_flagArray = array(
+    protected $_flagArray = [
         0x1 => 'MsgFlags',
         0x2 => 'Sent',
         0x4 => 'position',
@@ -54,28 +55,28 @@ class Horde_Compress_Dbx extends Horde_Compress_Base
         0x81 => 'MsgFlags',
         0x84 => 'position',
         0x91 => 'size',
-    );
+    ];
 
     /**
      * TODO
      *
      * @var array
      */
-    protected $_mails = array();
+    protected $_mails = [];
 
     /**
      * TODO
      *
      * @var array
      */
-    protected $_tmp = array();
+    protected $_tmp = [];
 
     /**
      * @return array  List of messages.
      */
-    public function decompress($data, array $params = array())
+    public function decompress($data, array $params = [])
     {
-        $this->_mails = $this->_tmp = array();
+        $this->_mails = $this->_tmp = [];
 
         $position = 0xC4;
         $header_info = unpack('Lposition/LDataLength/nHeaderLength/nFlagCount', substr($data, $position, 12));
@@ -162,7 +163,7 @@ class Horde_Compress_Dbx extends Horde_Compress_Base
      */
     protected function _readMessageInfo($data, $position)
     {
-        $message_info = array();
+        $message_info = [];
         $msg_header = unpack('Lposition/LDataLength/SHeaderLength/SFlagCount', substr($data, $position, 12));
         if ($msg_header['position'] != $position) {
             throw new Horde_Compress_Exception(Horde_Compress_Translation::t("Invalid file format"));
@@ -177,7 +178,7 @@ class Horde_Compress_Dbx extends Horde_Compress_Base
         $size = $DataSize;
         $DataBuffer = substr($data, $position, $size);
         $position += $size;
-        $message_info = array();
+        $message_info = [];
 
         /* Process flags */
         for ($i = 0; $i < $flags; ++$i) {
@@ -186,48 +187,48 @@ class Horde_Compress_Dbx extends Horde_Compress_Base
 
             $mask = $f & 0xFF;
             switch ($mask) {
-            case 0x1:
-                $pos = $pos + ($f >> 8);
-                $message_info['MsgFlags'] = array_pop(unpack('C', substr($DataBuffer, $pos++, 1)));
-                $message_info['MsgFlags'] += array_pop(unpack('C', substr($DataBuffer, $pos++, 1))) * 256;
-                $message_info['MsgFlags'] += array_pop(unpack('C', substr($DataBuffer, $pos, 1))) * 65536;
-                break;
+                case 0x1:
+                    $pos = $pos + ($f >> 8);
+                    $message_info['MsgFlags'] = array_pop(unpack('C', substr($DataBuffer, $pos++, 1)));
+                    $message_info['MsgFlags'] += array_pop(unpack('C', substr($DataBuffer, $pos++, 1))) * 256;
+                    $message_info['MsgFlags'] += array_pop(unpack('C', substr($DataBuffer, $pos, 1))) * 65536;
+                    break;
 
-            case 0x2:
-            case 0x4:
-                $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
-                $message_info[$this->_flagArray[$mask]] = array_pop(unpack('L', substr($DataBuffer, $pos, 4)));
-                break;
+                case 0x2:
+                case 0x4:
+                    $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
+                    $message_info[$this->_flagArray[$mask]] = array_pop(unpack('L', substr($DataBuffer, $pos, 4)));
+                    break;
 
-            case 0x7:
-            case 0x8:
-            case 0x9:
-            case 0xA:
-            case 0xB:
-            case 0xD:
-            case 0xE:
-            case 0x13:
-            case 0x1A:
-                $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
-                $message_info[$this->_flagArray[$mask]] = $this->_readString($DataBuffer, $pos);
-                break;
+                case 0x7:
+                case 0x8:
+                case 0x9:
+                case 0xA:
+                case 0xB:
+                case 0xD:
+                case 0xE:
+                case 0x13:
+                case 0x1A:
+                    $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
+                    $message_info[$this->_flagArray[$mask]] = $this->_readString($DataBuffer, $pos);
+                    break;
 
-            case 0x12:
-                $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
-                $message_info['Received'] = array_pop(unpack('L', substr($DataBuffer, $pos, 4)));
-                break;
+                case 0x12:
+                    $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
+                    $message_info['Received'] = array_pop(unpack('L', substr($DataBuffer, $pos, 4)));
+                    break;
 
-            case 0x1B:
-                $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
-                $message_info['AccountID'] = intval($this->_readString($DataBuffer, $pos));
-                break;
+                case 0x1B:
+                    $pos += array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
+                    $message_info['AccountID'] = intval($this->_readString($DataBuffer, $pos));
+                    break;
 
-            case 0x80:
-            case 0x81:
-            case 0x84:
-            case 0x91:
-                $message_info[$this->_flagArray[$mask]] = array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
-                break;
+                case 0x80:
+                case 0x81:
+                case 0x84:
+                case 0x91:
+                    $message_info[$this->_flagArray[$mask]] = array_pop(unpack('L', substr($FlagsBuffer, $i * 4, 4))) >> 8;
+                    break;
             }
         }
 
@@ -251,12 +252,12 @@ class Horde_Compress_Dbx extends Horde_Compress_Base
 
         // Push it into list of processed items.
         $this->_tmp[$position] = true;
-        if (($index_header['NextIndex'] > 0) &&
-            empty($this->_tmp[$index_header['NextIndex']])) {
+        if (($index_header['NextIndex'] > 0)
+            && empty($this->_tmp[$index_header['NextIndex']])) {
             $this->_readIndex($data, $index_header['NextIndex']);
         }
-        if (($index_header['PrevIndex'] > 0) &&
-            empty($this->_tmp[$index_header['PrevIndex']])) {
+        if (($index_header['PrevIndex'] > 0)
+            && empty($this->_tmp[$index_header['PrevIndex']])) {
             $this->_readIndex($data, $index_header['PrevIndex']);
         }
         $position += 24;
@@ -271,8 +272,8 @@ class Horde_Compress_Dbx extends Horde_Compress_Base
                     $mail['content'] = $this->_readMessage($data, $mail['info']['position']);
                     $this->_mails[] = $mail;
                 }
-                if (($IndexItem['ChildIndex'] > 0) &&
-                    empty($this->_tmp[$IndexItem['ChildIndex']])) {
+                if (($IndexItem['ChildIndex'] > 0)
+                    && empty($this->_tmp[$IndexItem['ChildIndex']])) {
                     $this->_readIndex($data, $IndexItem['ChildIndex']);
                 }
             }

@@ -1,6 +1,9 @@
 <?php
+
+use Horde\Util\Util;
+
 /**
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -43,29 +46,29 @@ class Horde_Compress_Zip extends Horde_Compress_Base
      *
      * @see decompress().
      */
-    const ZIP_LIST = 1;
+    public const ZIP_LIST = 1;
 
     /**
      * Return file data.
      *
      * @see decompress().
      */
-    const ZIP_DATA = 2;
+    public const ZIP_DATA = 2;
 
     /**
      * Beginning of central directory record.
      */
-    const CTRL_DIR_HEADER = "\x50\x4b\x01\x02";
+    public const CTRL_DIR_HEADER = "\x50\x4b\x01\x02";
 
     /**
      * End of central directory record.
      */
-    const CTRL_DIR_END = "\x50\x4b\x05\x06\x00\x00\x00\x00";
+    public const CTRL_DIR_END = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 
     /**
      * Beginning of file contents.
      */
-    const FILE_HEADER = "\x50\x4b\x03\x04";
+    public const FILE_HEADER = "\x50\x4b\x03\x04";
 
     /**
      */
@@ -80,7 +83,7 @@ class Horde_Compress_Zip extends Horde_Compress_Base
      *
      * @var array
      */
-    protected $_methods = array(
+    protected $_methods = [
         0x0 => 'None',
         0x1 => 'Shrunk',
         0x2 => 'Super Fast',
@@ -88,8 +91,8 @@ class Horde_Compress_Zip extends Horde_Compress_Base
         0x4 => 'Normal',
         0x5 => 'Maximum',
         0x6 => 'Imploded',
-        0x8 => 'Deflated'
-    );
+        0x8 => 'Deflated',
+    ];
 
     /**
      * Temporary data for compressing files.
@@ -118,9 +121,9 @@ class Horde_Compress_Zip extends Horde_Compress_Base
      *
      * @return mixed  The ZIP file as either a string or a stream resource.
      */
-    public function compress($data, array $params = array())
+    public function compress($data, array $params = [])
     {
-        if (!Horde_Util::extensionExists('zlib')) {
+        if (!Util::extensionExists('zlib')) {
             throw new Horde_Compress_Exception(
                 Horde_Compress_Translation::t(
                     "This server can't compress zip files."
@@ -128,7 +131,7 @@ class Horde_Compress_Zip extends Horde_Compress_Base
             );
         }
 
-        $this->_ctrldir = array();
+        $this->_ctrldir = [];
         $this->_tmp = fopen('php://temp', 'r+');
 
         foreach ($data as $val) {
@@ -143,17 +146,17 @@ class Horde_Compress_Zip extends Horde_Compress_Base
 
         fwrite(
             $this->_tmp,
-            $dir . self::CTRL_DIR_END .
+            $dir . self::CTRL_DIR_END
             /* Total # of entries "on this disk". */
-            pack('v', count($this->_ctrldir)) .
+            . pack('v', count($this->_ctrldir))
             /* Total # of entries overall. */
-            pack('v', count($this->_ctrldir)) .
+            . pack('v', count($this->_ctrldir))
             /* Size of central directory. */
-            pack('V', strlen($dir)) .
+            . pack('V', strlen($dir))
             /* Offset to start of central dir. */
-            pack('V', $offset) .
+            . pack('V', $offset)
             /* ZIP file comment length. */
-            "\x00\x00"
+            . "\x00\x00"
         );
 
         rewind($this->_tmp);
@@ -188,17 +191,19 @@ class Horde_Compress_Zip extends Horde_Compress_Base
      *   - type: File type
      * @throws Horde_Compress_Exception
      */
-    public function decompress($data, array $params = array())
+    public function decompress($data, array $params = [])
     {
         if (isset($params['action'])) {
             switch ($params['action']) {
-            case self::ZIP_LIST:
-                return $this->_getZipInfo($data);
+                case self::ZIP_LIST:
+                    return $this->_getZipInfo($data);
 
-            case self::ZIP_DATA:
-                return $this->_getZipData(
-                    $data, $params['info'], $params['key']
-                );
+                case self::ZIP_DATA:
+                    return $this->_getZipData(
+                        $data,
+                        $params['info'],
+                        $params['key']
+                    );
             }
         }
     }
@@ -214,7 +219,7 @@ class Horde_Compress_Zip extends Horde_Compress_Base
      */
     protected function _getZipInfo($data)
     {
-        $entries = array();
+        $entries = [];
 
         /* Get details from Central directory structure. */
         $fhStart = strpos($data, self::CTRL_DIR_HEADER);
@@ -238,7 +243,7 @@ class Horde_Compress_Zip extends Horde_Compress_Base
 
             $name = substr($data, $fhStart + 46, $info['Length']);
 
-            $entries[$name] = array(
+            $entries[$name] = [
                 'attr' => null,
                 'crc' => sprintf("%08s", dechex($info['CRC32'])),
                 'csize' => $info['Compressed'],
@@ -248,16 +253,18 @@ class Horde_Compress_Zip extends Horde_Compress_Base
                 'method' => $this->_methods[$info['Method']],
                 '_method' => $info['Method'],
                 'size' => $info['Uncompressed'],
-                'type' => null
-            );
+                'type' => null,
+            ];
 
-            $entries[$name]['date'] =
-                mktime((($info['Time'] >> 11) & 0x1f),
-                       (($info['Time'] >> 5) & 0x3f),
-                       (($info['Time'] << 1) & 0x3e),
-                       (($info['Time'] >> 21) & 0x0f),
-                       (($info['Time'] >> 16) & 0x1f),
-                       ((($info['Time'] >> 25) & 0x7f) + 1980));
+            $entries[$name]['date']
+                = mktime(
+                    (($info['Time'] >> 11) & 0x1f),
+                    (($info['Time'] >> 5) & 0x3f),
+                    (($info['Time'] << 1) & 0x3e),
+                    (($info['Time'] >> 21) & 0x0f),
+                    (($info['Time'] >> 16) & 0x1f),
+                    ((($info['Time'] >> 25) & 0x7f) + 1980)
+                );
 
             if (strlen($data) < $fhStart + 43) {
                 throw new Horde_Compress_Exception(
@@ -272,12 +279,12 @@ class Horde_Compress_Zip extends Horde_Compress_Base
             $entries[$name]['type'] = ($info['Internal'] & 0x01)
                 ? 'text'
                 : 'binary';
-            $entries[$name]['attr'] =
-                (($info['External'] & 0x10) ? 'D' : '-') .
-                (($info['External'] & 0x20) ? 'A' : '-') .
-                (($info['External'] & 0x03) ? 'S' : '-') .
-                (($info['External'] & 0x02) ? 'H' : '-') .
-                (($info['External'] & 0x01) ? 'R' : '-');
+            $entries[$name]['attr']
+                = (($info['External'] & 0x10) ? 'D' : '-')
+                . (($info['External'] & 0x20) ? 'A' : '-')
+                . (($info['External'] & 0x03) ? 'S' : '-')
+                . (($info['External'] & 0x02) ? 'H' : '-')
+                . (($info['External'] & 0x01) ? 'R' : '-');
         } while (($fhStart = strpos($data, self::CTRL_DIR_HEADER, $fhStart + 46)) !== false);
 
         /* Get details from local file header. */
@@ -300,8 +307,8 @@ class Horde_Compress_Zip extends Horde_Compress_Base
                 $entries[$name]['_dataStart'] = $fhStart + 30
                     + $info['Length'] + $info['ExtraLength'];
             }
-        } while ($data_len > $fhStart + 30 + $info['Length'] &&
-                 ($fhStart = strpos($data, self::FILE_HEADER, $fhStart + 30 + $info['Length'])) !== false);
+        } while ($data_len > $fhStart + 30 + $info['Length']
+                 && ($fhStart = strpos($data, self::FILE_HEADER, $fhStart + 30 + $info['Length'])) !== false);
 
         return array_values($entries);
     }
@@ -317,8 +324,8 @@ class Horde_Compress_Zip extends Horde_Compress_Base
      */
     protected function _getZipData($data, $info, $key)
     {
-        if (($info[$key]['_method'] == 0x8) &&
-            Horde_Util::extensionExists('zlib')) {
+        if (($info[$key]['_method'] == 0x8)
+            && Util::extensionExists('zlib')) {
             /* If the file has been deflated, and zlib is installed,
                then inflate the data again. */
             return @gzinflate(
@@ -327,7 +334,9 @@ class Horde_Compress_Zip extends Horde_Compress_Base
         } elseif ($info[$key]['_method'] == 0x0) {
             /* Files that aren't compressed. */
             return substr(
-                $data, $info[$key]['_dataStart'], $info[$key]['csize']
+                $data,
+                $info[$key]['_dataStart'],
+                $info[$key]['csize']
             );
         }
 
@@ -367,12 +376,12 @@ class Horde_Compress_Zip extends Horde_Compress_Base
             $timearray['seconds'] = 0;
         }
 
-        return (($timearray['year'] - 1980) << 25) |
-                ($timearray['mon'] << 21) |
-                ($timearray['mday'] << 16) |
-                ($timearray['hours'] << 11) |
-                ($timearray['minutes'] << 5) |
-                ($timearray['seconds'] >> 1);
+        return (($timearray['year'] - 1980) << 25)
+                | ($timearray['mon'] << 21)
+                | ($timearray['mday'] << 16)
+                | ($timearray['hours'] << 11)
+                | ($timearray['minutes'] << 5)
+                | ($timearray['seconds'] >> 1);
     }
 
     /**
@@ -389,18 +398,19 @@ class Horde_Compress_Zip extends Horde_Compress_Base
 
         /* Get the hex time. */
         $dtime    = sprintf('%08s', dechex($this->_unix2DosTime($ftime)));
-        $hexdtime = chr(hexdec($dtime[6] . $dtime[7])) .
-                    chr(hexdec($dtime[4] . $dtime[5])) .
-                    chr(hexdec($dtime[2] . $dtime[3])) .
-                    chr(hexdec($dtime[0] . $dtime[1]));
+        $hexdtime = chr(hexdec($dtime[6] . $dtime[7]))
+                    . chr(hexdec($dtime[4] . $dtime[5]))
+                    . chr(hexdec($dtime[2] . $dtime[3]))
+                    . chr(hexdec($dtime[0] . $dtime[1]));
 
         /* "Local file header" segment. */
         if (is_resource($file['data'])) {
             $zdata = fopen('php://temp', 'r+');
 
-            $params = new stdClass;
+            $params = new stdClass();
             stream_filter_register(
-                'horde_compress_filter_crc32', 'Horde_Stream_Filter_Crc32'
+                'horde_compress_filter_crc32',
+                'Horde_Stream_Filter_Crc32'
             );
             $filter = stream_filter_prepend(
                 $file['data'],
@@ -433,25 +443,26 @@ class Horde_Compress_Zip extends Horde_Compress_Base
         }
 
         /* Common data for the two entries. */
-        $common =
-            "\x14\x00" .                /* Version needed to extract. */
-            "\x00\x00" .                /* General purpose bit flag. */
-            "\x08\x00" .                /* Compression method. */
-            $hexdtime .                 /* Last modification time/date. */
-            pack('V', $crc) .           /* CRC 32 information. */
-            pack('V', $c_len) .         /* Compressed filesize. */
-            pack('V', $unc_len) .       /* Uncompressed filesize. */
-            pack('v', strlen($name)) .  /* Length of filename. */
-            pack('v', 0);               /* Extra field length. */
+        $common
+            = "\x14\x00"                /* Version needed to extract. */
+            . "\x00\x00"                /* General purpose bit flag. */
+            . "\x08\x00"                /* Compression method. */
+            . $hexdtime                 /* Last modification time/date. */
+            . pack('V', $crc)           /* CRC 32 information. */
+            . pack('V', $c_len)         /* Compressed filesize. */
+            . pack('V', $unc_len)       /* Uncompressed filesize. */
+            . pack('v', strlen($name))  /* Length of filename. */
+            . pack('v', 0);               /* Extra field length. */
 
         /* Add this entry to zip data. */
         fseek($this->_tmp, 0, SEEK_END);
         $old_offset = ftell($this->_tmp);
 
-        fwrite($this->_tmp,
-            self::FILE_HEADER .  /* Begin creating the ZIP data. */
-            $common .            /* Common data. */
-            $name
+        fwrite(
+            $this->_tmp,
+            self::FILE_HEADER  /* Begin creating the ZIP data. */
+            . $common            /* Common data. */
+            . $name
         );
 
         /* "File data" segment. */
@@ -463,17 +474,17 @@ class Horde_Compress_Zip extends Horde_Compress_Base
         }
 
         /* Add to central directory record. */
-        $this->_ctrldir[] =
-            self::CTRL_DIR_HEADER .
-            "\x00\x00" .              /* Version made by. */
-            $common .                 /* Common data. */
-            pack('v', 0) .            /* File comment length. */
-            pack('v', 0) .            /* Disk number start. */
-            pack('v', 0) .            /* Internal file attributes. */
-            pack('V', 32) .           /* External file attributes -
+        $this->_ctrldir[]
+            = self::CTRL_DIR_HEADER
+            . "\x00\x00"              /* Version made by. */
+            . $common                 /* Common data. */
+            . pack('v', 0)            /* File comment length. */
+            . pack('v', 0)            /* Disk number start. */
+            . pack('v', 0)            /* Internal file attributes. */
+            . pack('V', 32)           /* External file attributes -
                                        * 'archive' bit set. */
-            pack('V', $old_offset) .  /* Relative offset of local header. */
-            $name;                    /* File name. */
+            . pack('V', $old_offset)  /* Relative offset of local header. */
+            . $name;                    /* File name. */
     }
 
 }

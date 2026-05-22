@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -20,8 +21,8 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Compress
  */
- class Horde_Compress_Tnef_MessageData extends Horde_Compress_Tnef_Object
- {
+class Horde_Compress_Tnef_MessageData extends Horde_Compress_Tnef_Object
+{
     /**
      *
      * @var string
@@ -58,19 +59,19 @@
     public function setTnefAttribute($attribute, $value, $size)
     {
         switch ($attribute) {
-        case Horde_Compress_Tnef::ASUBJECT:
-            $this->subject = trim($value);
-            break;
+            case Horde_Compress_Tnef::ASUBJECT:
+                $this->subject = trim($value);
+                break;
 
-        case Horde_Compress_Tnef::ADATERECEIVED:
-            if (!$this->dateSent) {
+            case Horde_Compress_Tnef::ADATERECEIVED:
+                if (!$this->dateSent) {
+                    $this->dateSent = new Horde_Compress_Tnef_Date($value);
+                }
+                break;
+
+            case Horde_Compress_Tnef::ADATESENT:
                 $this->dateSent = new Horde_Compress_Tnef_Date($value);
-            }
-            break;
-
-        case Horde_Compress_Tnef::ADATESENT:
-            $this->dateSent = new Horde_Compress_Tnef_Date($value);
-            break;
+                break;
         }
     }
 
@@ -84,17 +85,17 @@
     public function setMapiAttribute($type, $name, $value)
     {
         switch ($name) {
-        case Horde_Compress_Tnef::MAPI_CONVERSATION_TOPIC:
-            $this->subject = $value;
-            break;
+            case Horde_Compress_Tnef::MAPI_CONVERSATION_TOPIC:
+                $this->subject = $value;
+                break;
 
-        case Horde_Compress_Tnef::MAPI_SENT_REP_EMAIL_ADDR:
-            $this->from = $value;
-            break;
+            case Horde_Compress_Tnef::MAPI_SENT_REP_EMAIL_ADDR:
+                $this->from = $value;
+                break;
 
-        case Horde_Compress_Tnef::MAPI_SENT_REP_NAME:
-            $this->fromName = $value;
+            case Horde_Compress_Tnef::MAPI_SENT_REP_NAME:
+                $this->fromName = $value;
         }
     }
 
- }
+}

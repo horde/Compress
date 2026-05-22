@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -37,7 +38,13 @@ class Horde_Compress_Tnef_Date extends Horde_Compress_Tnef_Object
             $this->date = new Horde_Date(
                 sprintf(
                     '%04d-%02d-%02d %02d:%02d:%02d',
-                    $year, $month, $day, $hour, $minute, $second)
+                    $year,
+                    $month,
+                    $day,
+                    $hour,
+                    $minute,
+                    $second
+                )
             );
         } catch (Horde_Date_Exception $e) {
             throw new Horde_Compress_Exception($e);

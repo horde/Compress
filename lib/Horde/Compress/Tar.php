@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2002-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2002-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -39,7 +40,7 @@ class Horde_Compress_Tar extends Horde_Compress_Base
      *
      * @var array
      */
-    protected $_types = array(
+    protected $_types = [
         0x0   =>  'Unix file',
         0x30  =>  'File',
         0x31  =>  'Link',
@@ -48,8 +49,8 @@ class Horde_Compress_Tar extends Horde_Compress_Base
         0x34  =>  'Block special file',
         0x35  =>  'Directory',
         0x36  =>  'FIFO special file',
-        0x37  =>  'Contiguous file'
-    );
+        0x37  =>  'Contiguous file',
+    ];
 
     /**
      * Temporary contents for compressing files.
@@ -74,7 +75,7 @@ class Horde_Compress_Tar extends Horde_Compress_Base
      *
      * @return mixed  The TAR file as either a string or a stream resource.
      */
-    public function compress($data, array $params = array())
+    public function compress($data, array $params = [])
     {
         $this->_tmp = fopen('php://temp', 'r+');
 
@@ -121,21 +122,21 @@ class Horde_Compress_Tar extends Horde_Compress_Base
             }
 
             /* Header data for the file entries. */
-            $header =
-                pack('a99', $name) . "\0" .                 /* Name. */
-                $this->_formatNumber($file, 'getPerms') .   /* Permissions. */
-                $this->_formatNumber($file, 'getOwner') .   /* Owner ID. */
-                $this->_formatNumber($file, 'getGroup') .   /* Group ID. */
-                sprintf("%011o\0", $isLink ? 0 : $length) . /* Size. */
-                sprintf("%011o\0", $ftime) .                /* MTime. */
-                '        ' .                                /* Checksum. */
-                ($isLink ? '1' : '0') .                     /* Type. */
-                pack('a99', $link) . "\0" .                 /* Link target. */
-                "ustar\0" . "00" .                          /* Magic marker. */
-                pack('a31', $owner) . "\0" .                /* Owner name. */
-                pack('a31', $group) . "\0" .                /* Group name. */
-                pack('a16', '') .                           /* Device numbers. */
-                pack('a154', $prefix) . "\0";               /* Name prefix. */
+            $header
+                = pack('a99', $name) . "\0"                 /* Name. */
+                . $this->_formatNumber($file, 'getPerms')   /* Permissions. */
+                . $this->_formatNumber($file, 'getOwner')   /* Owner ID. */
+                . $this->_formatNumber($file, 'getGroup')   /* Group ID. */
+                . sprintf("%011o\0", $isLink ? 0 : $length) /* Size. */
+                . sprintf("%011o\0", $ftime)                /* MTime. */
+                . '        '                                /* Checksum. */
+                . ($isLink ? '1' : '0')                     /* Type. */
+                . pack('a99', $link) . "\0"                 /* Link target. */
+                . "ustar\0" . "00"                          /* Magic marker. */
+                . pack('a31', $owner) . "\0"                /* Owner name. */
+                . pack('a31', $group) . "\0"                /* Group name. */
+                . pack('a16', '')                           /* Device numbers. */
+                . pack('a154', $prefix) . "\0";               /* Name prefix. */
             $header = pack('a512', $header);
             $checksum = array_sum(array_map('ord', str_split($header)));
             $header = substr($header, 0, 148)
@@ -223,11 +224,11 @@ class Horde_Compress_Tar extends Horde_Compress_Base
      *
      * @throws Horde_Compress_Exception
      */
-    public function decompress($data, array $params = array())
+    public function decompress($data, array $params = [])
     {
         $data_len = strlen($data);
         $position = 0;
-        $return_array = array();
+        $return_array = [];
 
         while ($position < $data_len) {
             if (version_compare(PHP_VERSION, '5.5', '>=')) {
@@ -244,33 +245,33 @@ class Horde_Compress_Tar extends Horde_Compress_Base
             $position += ceil(octdec($info['size']) / 512) * 512;
 
             if ($info['filename']) {
-                $file = array(
+                $file = [
                     'attr' => null,
                     'data' => null,
                     'date' => octdec($info['mtime']),
                     'name' => trim($info['filename']),
                     'size' => octdec($info['size']),
-                    'type' => isset($this->_types[$info['typeflag']]) ? $this->_types[$info['typeflag']] : null
-                );
+                    'type' => $this->_types[$info['typeflag']] ?? null,
+                ];
 
-                if (($info['typeflag'] == 0) ||
-                    ($info['typeflag'] == 0x30) ||
-                    ($info['typeflag'] == 0x35)) {
+                if (($info['typeflag'] == 0)
+                    || ($info['typeflag'] == 0x30)
+                    || ($info['typeflag'] == 0x35)) {
                     /* File or folder. */
                     $file['data'] = $contents;
 
                     $mode = hexdec(substr($info['mode'], 4, 3));
-                    $file['attr'] =
-                        (($info['typeflag'] == 0x35) ? 'd' : '-') .
-                        (($mode & 0x400) ? 'r' : '-') .
-                        (($mode & 0x200) ? 'w' : '-') .
-                        (($mode & 0x100) ? 'x' : '-') .
-                        (($mode & 0x040) ? 'r' : '-') .
-                        (($mode & 0x020) ? 'w' : '-') .
-                        (($mode & 0x010) ? 'x' : '-') .
-                        (($mode & 0x004) ? 'r' : '-') .
-                        (($mode & 0x002) ? 'w' : '-') .
-                        (($mode & 0x001) ? 'x' : '-');
+                    $file['attr']
+                        = (($info['typeflag'] == 0x35) ? 'd' : '-')
+                        . (($mode & 0x400) ? 'r' : '-')
+                        . (($mode & 0x200) ? 'w' : '-')
+                        . (($mode & 0x100) ? 'x' : '-')
+                        . (($mode & 0x040) ? 'r' : '-')
+                        . (($mode & 0x020) ? 'w' : '-')
+                        . (($mode & 0x010) ? 'x' : '-')
+                        . (($mode & 0x004) ? 'r' : '-')
+                        . (($mode & 0x002) ? 'w' : '-')
+                        . (($mode & 0x001) ? 'x' : '-');
                 }
 
                 $return_array[] = $file;
