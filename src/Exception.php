@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Horde\Compress;
 
-use Horde\Exception\Wrapped;
+use Horde\Exception\HordeRuntimeException;
 
 /**
  * Exception class for the Compress package.
@@ -26,4 +26,4 @@ use Horde\Exception\Wrapped;
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Compress
  */
-class Exception extends Wrapped {}
+class Exception extends HordeRuntimeException {}
