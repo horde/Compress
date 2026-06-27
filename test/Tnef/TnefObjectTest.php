@@ -42,7 +42,7 @@ class TnefObjectTest extends TestCase
 
     public function testConstructorWithData(): void
     {
-        $obj = new class(null, 'binary data', ['key' => 'val']) extends TnefObject {
+        $obj = new class (null, 'binary data', ['key' => 'val']) extends TnefObject {
             public function getData(): ?string
             {
                 return $this->data;

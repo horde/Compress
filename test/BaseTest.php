@@ -90,7 +90,7 @@ class BaseTest extends TestCase
     public function testConstructorWithExplicitLogger(): void
     {
         $logger = new NullLogger();
-        $base = new class($logger) extends Base {
+        $base = new class ($logger) extends Base {
             public function getLogger(): LoggerInterface
             {
                 return $this->logger;

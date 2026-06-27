@@ -166,7 +166,7 @@ class TarTest extends TestCase
         $tmpDir = sys_get_temp_dir() . '/horde_tar_test_' . uniqid();
         mkdir($tmpDir);
         file_put_contents($tmpDir . '/hello.txt', 'Hello SplFileInfo');
-        chmod($tmpDir . '/hello.txt', 0644);
+        chmod($tmpDir . '/hello.txt', 0o644);
 
         try {
             $spl = new SplFileInfo($tmpDir . '/hello.txt');

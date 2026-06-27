@@ -135,7 +135,8 @@ class DbxTest extends TestCase
         // Build index at $indexPos
         // Index header: FilePos, Unknown1, PrevIndex, NextIndex, Count, Unknown (24 bytes)
         $itemCount = 1;
-        $indexHeader = pack('VVVVVV',
+        $indexHeader = pack(
+            'VVVVVV',
             $indexPos,   // FilePos (must match)
             0,           // Unknown1
             0,           // PrevIndex (none)
